@@ -42,5 +42,8 @@
     "drizzle-kit": "^0.31.4",
     "drizzle-orm": "^0.44.4",
     "typescript": "~5.9.2"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2"
   }
 }

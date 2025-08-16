@@ -75,13 +75,11 @@ export default defineProject(({ mode }) => {
     ],
 
     server: {
-      port: 5180,
+      port: 5173,
+      strictPort: true, // Don't try other ports if 5173 is in use
       proxy: {
         "/api": {
-          target:
-            process.env.API === "remote"
-              ? "https://example.com"
-              : env.API_ORIGIN,
+          target: "http://localhost:8788",
           changeOrigin: true,
         },
       },

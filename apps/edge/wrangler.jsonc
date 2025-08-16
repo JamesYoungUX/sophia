@@ -20,14 +20,10 @@
     "ALLOWED_ORIGINS": "http://localhost:5173,http://127.0.0.1:5173"
   },
   "hyperdrive": [
-    {
-      "binding": "HYPERDRIVE",
-      "id": "your-hyperdrive-cached-id-here"
-    },
-    {
-      "binding": "HYPERDRIVE_DIRECT",
-      "id": "your-hyperdrive-direct-id-here"
-    }
+    // ,{
+    //   "binding": "HYPERDRIVE_DIRECT",
+    //   "id": "your-hyperdrive-direct-id-here"
+    // }
   ],
   "kv_namespaces": [],
 
@@ -48,7 +44,7 @@
       "hyperdrive": [
         {
           "binding": "HYPERDRIVE",
-          "id": "your-production-hyperdrive-cached-id-here"
+          "id": "hd_fe571b2400674f6fab9113c1aa1d43c5"
         },
         {
           "binding": "HYPERDRIVE_DIRECT",

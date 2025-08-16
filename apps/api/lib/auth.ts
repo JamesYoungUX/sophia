@@ -6,6 +6,7 @@ import { betterAuth } from "better-auth";
 import type { DB } from "better-auth/adapters/drizzle";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { anonymous, organization } from "better-auth/plugins";
+import { ALLOWED_ORIGINS } from "./cors";
 import type { Env } from "./env";
 
 /**
@@ -44,8 +45,23 @@ export function createAuth(
   db: DB,
   env: AuthEnv,
 ): ReturnType<typeof betterAuth> {
+  // Use the shared allowed origins
+  const allowedOrigins = ALLOWED_ORIGINS;
+
   return betterAuth({
     secret: env.BETTER_AUTH_SECRET,
+
+    // Configure CORS and origins
+    cors: {
+      origin: allowedOrigins,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+      allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"],
+      credentials: true,
+      maxAge: 86400, // 24 hours
+    },
+
+    // Configure trusted origins for authentication
+    trustedOrigins: allowedOrigins,
     database: drizzleAdapter(db, {
       provider: "pg",
 
@@ -62,11 +78,42 @@ export function createAuth(
 
     account: {
       modelName: "identity",
+      fields: {
+        // Map the fields from the identity table to what Better Auth expects
+        // Using snake_case to match the database schema
+        accountId: "account_id",
+        providerId: "provider_id",
+        userId: "user_id",
+        accessToken: "access_token",
+        refreshToken: "refresh_token",
+        idToken: "id_token",
+        accessTokenExpiresAt: "access_token_expires_at",
+        refreshTokenExpiresAt: "refresh_token_expires_at",
+        password: "password",
+        createdAt: "created_at",
+        updatedAt: "updated_at"
+      }
     },
 
     // Email and password authentication
     emailAndPassword: {
       enabled: true,
+      // Explicitly set the provider ID for email/password auth
+      providerId: "email",
+      // Configure the credential lookup to match the database schema
+      credentialFields: {
+        accountId: "account_id",
+        providerId: "provider_id",
+        password: "password"
+      },
+      // Add debug logging for credential verification
+      debug: process.env.NODE_ENV !== 'production',
+      // Ensure we're using the correct field names for the credential lookup
+      fields: {
+        accountId: "account_id",
+        providerId: "provider_id",
+        password: "password"
+      }
     },
 
     // OAuth providers
