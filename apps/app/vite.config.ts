@@ -79,7 +79,7 @@ export default defineProject(({ mode }) => {
       strictPort: true, // Don't try other ports if 5173 is in use
       proxy: {
         "/api": {
-          target: "http://localhost:8788",
+          target: "http://localhost:8791",
           changeOrigin: true,
         },
       },

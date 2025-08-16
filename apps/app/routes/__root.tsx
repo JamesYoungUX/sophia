@@ -1,7 +1,6 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { Layout } from "@/components/layout";
 import { LoginForm } from "@/components/login-form";
 import { createRootRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
@@ -32,9 +31,9 @@ export function Root() {
   }
 
   return (
-    <Layout>
+    <>
       <Outlet />
       <TanStackRouterDevtools />
-    </Layout>
+    </>
   );
 }

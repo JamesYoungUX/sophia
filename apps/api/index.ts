@@ -107,21 +107,7 @@ app.on(["GET", "POST", "OPTIONS"], "/api/auth/*", async (c) => {
   console.log("Method:", c.req.method);
   console.log("URL:", c.req.url);
   
-  // Handle providers endpoint
-  if (c.req.path === "/api/auth/providers" && c.req.method === "GET") {
-    console.log("Handling /api/auth/providers request");
-    return c.json({
-      email: { type: "email" },
-      google: {
-        type: "oauth",
-        id: "google",
-        name: "Google",
-        signinUrl: "/api/auth/oauth/google"
-      }
-    });
-  }
-  
-  // For all other auth routes, use the auth handler
+  // For all auth routes, use the auth handler
   try {
     const auth = c.get("auth");
     if (!auth) {
@@ -149,6 +135,13 @@ app.on(["GET", "POST", "OPTIONS"], "/api/auth/*", async (c) => {
 
     // Handle other auth routes
     const result = await auth.handler(c.req.raw);
+    
+    console.log("Auth handler result:", {
+      status: result.status,
+      statusText: result.statusText,
+      url: c.req.url,
+      method: c.req.method
+    });
     
     // Create a new response to ensure CORS headers are set correctly
     const response = new Response(result.body, {

@@ -61,9 +61,13 @@ const cf = await getPlatformProxy<CloudflareEnv>({
  * and production deployment with connection pooling and caching.
  */
 app.use("*", async (c, next) => {
-  const db = createDb(cf.env.HYPERDRIVE);
+  // Use direct DATABASE_URL if Hyperdrive is not available
+  const hyperdrive = cf.env.HYPERDRIVE || { 
+    connectionString: process.env.DATABASE_URL 
+  };
+  const db = createDb(hyperdrive);
   c.set("db", db);
-  c.set("auth", createAuth(db, cf.env));
+  c.set("auth", createAuth(db, { ...cf.env, ...process.env }));
   await next();
 });
 

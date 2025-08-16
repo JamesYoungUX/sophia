@@ -50,6 +50,7 @@ export function createAuth(
 
   return betterAuth({
     secret: env.BETTER_AUTH_SECRET,
+    baseURL: process.env.BETTER_AUTH_URL || "http://localhost:8791",
 
     // Configure CORS and origins
     cors: {
@@ -62,6 +63,14 @@ export function createAuth(
 
     // Configure trusted origins for authentication
     trustedOrigins: allowedOrigins,
+    
+    // Session configuration for OAuth state management
+    session: {
+      cookieCache: {
+        enabled: true,
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+      },
+    },
     database: drizzleAdapter(db, {
       provider: "pg",
 
@@ -78,49 +87,23 @@ export function createAuth(
 
     account: {
       modelName: "identity",
-      fields: {
-        // Map the fields from the identity table to what Better Auth expects
-        // Using snake_case to match the database schema
-        accountId: "account_id",
-        providerId: "provider_id",
-        userId: "user_id",
-        accessToken: "access_token",
-        refreshToken: "refresh_token",
-        idToken: "id_token",
-        accessTokenExpiresAt: "access_token_expires_at",
-        refreshTokenExpiresAt: "refresh_token_expires_at",
-        password: "password",
-        createdAt: "created_at",
-        updatedAt: "updated_at"
-      }
     },
 
     // Email and password authentication
     emailAndPassword: {
       enabled: true,
-      // Explicitly set the provider ID for email/password auth
-      providerId: "email",
-      // Configure the credential lookup to match the database schema
-      credentialFields: {
-        accountId: "account_id",
-        providerId: "provider_id",
-        password: "password"
-      },
-      // Add debug logging for credential verification
-      debug: process.env.NODE_ENV !== 'production',
-      // Ensure we're using the correct field names for the credential lookup
-      fields: {
-        accountId: "account_id",
-        providerId: "provider_id",
-        password: "password"
-      }
+      requireEmailVerification: false, // Set to true if you want email verification
+      sendEmailVerificationOnSignUp: false, // Set to true if you want email verification
     },
 
     // OAuth providers
+    // TODO: Add user access control for production deployment
+    // Options: 1) Domain restriction in Google Console, 2) User allowlist in database, 
+    // 3) Invitation-only system with admin approval workflow
     socialProviders: {
       google: {
-        clientId: env.GOOGLE_CLIENT_ID,
-        clientSecret: env.GOOGLE_CLIENT_SECRET,
+        clientId: process.env.GOOGLE_CLIENT_ID || "",
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
       },
     },
 

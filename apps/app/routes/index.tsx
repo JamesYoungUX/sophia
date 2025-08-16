@@ -2,10 +2,18 @@
 /* SPDX-License-Identifier: MIT */
 
 import { LoginForm } from "@/components/login-form";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { auth } from "@/lib/auth";
 
-// Set the login page as the default landing page
 export const Route = createFileRoute("/")({
+  beforeLoad: async () => {
+    const session = await auth.getSession();
+    if (session) {
+      throw redirect({
+        to: "/dashboard",
+      });
+    }
+  },
   component: LoginPage,
 });
 

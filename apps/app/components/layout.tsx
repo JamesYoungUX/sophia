@@ -11,14 +11,32 @@ import {
   FileText,
   Menu,
   X,
+  LogOut,
 } from "lucide-react";
 import { useState } from "react";
+import { auth } from "@/lib/auth";
+import { useRouter } from "@tanstack/react-router";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const router = useRouter();
+  const { data: session } = auth.useSession();
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    try {
+      await auth.signOut();
+      router.navigate({ to: "/" });
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
 
   const sidebarItems = [
-    { icon: Home, label: "Dashboard", to: "/" },
+    { icon: Home, label: "Dashboard", to: "/dashboard" },
     { icon: Activity, label: "Analytics", to: "/analytics" },
     { icon: Users, label: "Users", to: "/users" },
     { icon: FileText, label: "Reports", to: "/reports" },
@@ -34,8 +52,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         } transition-all duration-300 ease-in-out bg-muted/50 border-r overflow-hidden`}
       >
         <div className="h-full flex flex-col">
-          <div className="h-14 flex items-center px-4 border-b">
-            <h2 className="font-semibold text-lg">Console</h2>
+          <div className="h-14 flex items-center justify-center px-4 border-b">
+            <img
+              src="/Logo.svg"
+              alt="Sophia Logo"
+              className="w-10 h-10 object-contain"
+            />
           </div>
           <nav className="flex-1 p-4 space-y-1">
             {sidebarItems.map((item) => (
@@ -53,15 +75,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </nav>
           <div className="p-4 border-t">
-            <div className="flex items-center gap-3 px-3 py-2">
-              <div className="h-8 w-8 rounded-full bg-primary/10" />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">User</p>
-                <p className="text-xs text-muted-foreground truncate">
-                  user@example.com
-                </p>
-              </div>
-            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="w-full justify-start px-3"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              {isLoggingOut ? "Signing out..." : "Sign out"}
+            </Button>
           </div>
         </div>
       </aside>
@@ -83,14 +106,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
             )}
           </Button>
 
-          <div className="flex-1 flex items-center gap-4">
-            <h1 className="text-lg font-semibold">Application</h1>
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center">
+              <span className="text-white text-sm font-medium">
+                {(session?.user?.name || session?.user?.email || "U").charAt(0).toUpperCase()}
+              </span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium truncate">
+                {session?.user?.name || "User"}
+              </p>
+              <p className="text-xs text-muted-foreground truncate">
+                {session?.user?.email}
+              </p>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon">
-              <Settings className="h-5 w-5" />
-            </Button>
+          <div className="flex-1 flex items-center justify-center">
+            <h1 className="text-lg font-semibold">Dashboard</h1>
           </div>
         </header>
 
