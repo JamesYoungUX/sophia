@@ -9,14 +9,32 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './../routes/__root'
+import { Route as PatientsRouteImport } from './../routes/patients'
+import { Route as HistoryRouteImport } from './../routes/history'
 import { Route as DashboardRouteImport } from './../routes/dashboard'
+import { Route as ClinicalSupportRouteImport } from './../routes/clinical-support'
 import { Route as AccountRouteImport } from './../routes/account'
 import { Route as AboutRouteImport } from './../routes/about'
 import { Route as IndexRouteImport } from './../routes/index'
 
+const PatientsRoute = PatientsRouteImport.update({
+  id: '/patients',
+  path: '/patients',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClinicalSupportRoute = ClinicalSupportRouteImport.update({
+  id: '/clinical-support',
+  path: '/clinical-support',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AccountRoute = AccountRouteImport.update({
@@ -39,43 +57,98 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/clinical-support': typeof ClinicalSupportRoute
   '/dashboard': typeof DashboardRoute
+  '/history': typeof HistoryRoute
+  '/patients': typeof PatientsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/clinical-support': typeof ClinicalSupportRoute
   '/dashboard': typeof DashboardRoute
+  '/history': typeof HistoryRoute
+  '/patients': typeof PatientsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/clinical-support': typeof ClinicalSupportRoute
   '/dashboard': typeof DashboardRoute
+  '/history': typeof HistoryRoute
+  '/patients': typeof PatientsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/account' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/account'
+    | '/clinical-support'
+    | '/dashboard'
+    | '/history'
+    | '/patients'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/account' | '/dashboard'
-  id: '__root__' | '/' | '/about' | '/account' | '/dashboard'
+  to:
+    | '/'
+    | '/about'
+    | '/account'
+    | '/clinical-support'
+    | '/dashboard'
+    | '/history'
+    | '/patients'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/account'
+    | '/clinical-support'
+    | '/dashboard'
+    | '/history'
+    | '/patients'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AccountRoute: typeof AccountRoute
+  ClinicalSupportRoute: typeof ClinicalSupportRoute
   DashboardRoute: typeof DashboardRoute
+  HistoryRoute: typeof HistoryRoute
+  PatientsRoute: typeof PatientsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/patients': {
+      id: '/patients'
+      path: '/patients'
+      fullPath: '/patients'
+      preLoaderRoute: typeof PatientsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clinical-support': {
+      id: '/clinical-support'
+      path: '/clinical-support'
+      fullPath: '/clinical-support'
+      preLoaderRoute: typeof ClinicalSupportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/account': {
@@ -106,7 +179,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AccountRoute: AccountRoute,
+  ClinicalSupportRoute: ClinicalSupportRoute,
   DashboardRoute: DashboardRoute,
+  HistoryRoute: HistoryRoute,
+  PatientsRoute: PatientsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

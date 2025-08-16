@@ -13,5 +13,7 @@ export default defineConfig({
     cache: {
       dir: "./.cache/vitest",
     },
+    environment: "happy-dom",
+    setupFiles: ["./test-setup.ts"],
   },
 });

@@ -58,16 +58,16 @@ const data = {
       isActive: true,
       items: [
         {
+          title: "Clinical Support",
+          url: "/clinical-support",
+        },
+        {
+          title: "Patients",
+          url: "/patients",
+        },
+        {
           title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
+          url: "/history",
         },
       ],
     },
@@ -86,29 +86,6 @@ const data = {
         },
         {
           title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
           url: "#",
         },
       ],
@@ -137,21 +114,26 @@ const data = {
       ],
     },
   ],
-  projects: [
+  management: [
     {
-      name: "Design Engineering",
+      name: "Care Plans",
       url: "#",
       icon: Frame,
     },
     {
-      name: "Sales & Marketing",
+      name: "Access",
       url: "#",
       icon: PieChart,
     },
     {
-      name: "Travel",
+      name: "Agents",
       url: "#",
       icon: Map,
+    },
+    {
+      name: "Documentation",
+      url: "#",
+      icon: BookOpen,
     },
   ],
 }
@@ -164,7 +146,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavProjects projects={data.management} />
       </SidebarContent>
       <SidebarFooter>
       </SidebarFooter>
