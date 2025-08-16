@@ -25,10 +25,10 @@ const appRouter = router({
 const app = new Hono<AppContext>();
 
 // Import CORS middleware
-import { cors } from './lib/cors';
+import { cors } from "./lib/cors";
 
 // Apply CORS middleware to all routes
-app.use('*', cors);
+app.use("*", cors);
 
 // Root endpoint with API information
 app.get("/", (c) => {
@@ -54,7 +54,12 @@ app.get("/health", (c) => {
 
 // Test CORS endpoint
 app.get("/api/test-cors", (c) => {
-  return c.json({ message: 'CORS is working!' });
+  return c.json({ message: "CORS is working!" });
+});
+
+// Stub endpoint for devtools POST /api/auth/to-j-s-o-n
+app.post("/api/auth/to-j-s-o-n", (c) => {
+  return c.json({});
 });
 
 /*
@@ -93,11 +98,14 @@ app.get("/api/test-cors", (c) => {
 // Authentication routes
 app.on(["GET", "POST", "OPTIONS"], "/api/auth/*", async (c) => {
   // Handle CORS preflight requests
-  if (c.req.method === 'OPTIONS') {
+  if (c.req.method === "OPTIONS") {
     const response = new Response(null, { status: 204 });
-    response.headers.set('Access-Control-Allow-Origin', '*');
-    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    response.headers.set("Access-Control-Allow-Origin", "*");
+    response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    response.headers.set(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization",
+    );
     return response;
   }
 
@@ -106,7 +114,7 @@ app.on(["GET", "POST", "OPTIONS"], "/api/auth/*", async (c) => {
   console.log("Path:", c.req.path);
   console.log("Method:", c.req.method);
   console.log("URL:", c.req.url);
-  
+
   // For all auth routes, use the auth handler
   try {
     const auth = c.get("auth");
@@ -122,7 +130,7 @@ app.on(["GET", "POST", "OPTIONS"], "/api/auth/*", async (c) => {
         console.log("Login attempt with email:", body.email);
         // Reconstruct the request with the parsed body
         const newReq = new Request(c.req.raw, {
-          body: JSON.stringify(body)
+          body: JSON.stringify(body),
         });
         const result = await auth.handler(newReq);
         console.log("Auth response status:", result.status);
@@ -135,45 +143,54 @@ app.on(["GET", "POST", "OPTIONS"], "/api/auth/*", async (c) => {
 
     // Handle other auth routes
     const result = await auth.handler(c.req.raw);
-    
+
     console.log("Auth handler result:", {
       status: result.status,
       statusText: result.statusText,
       url: c.req.url,
-      method: c.req.method
+      method: c.req.method,
     });
-    
+
     // Create a new response to ensure CORS headers are set correctly
     const response = new Response(result.body, {
       status: result.status,
       statusText: result.statusText,
-      headers: result.headers
+      headers: result.headers,
     });
-    
+
     // Set CORS headers
-    response.headers.set('Access-Control-Allow-Origin', '*');
-    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    
+    response.headers.set("Access-Control-Allow-Origin", "*");
+    response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    response.headers.set(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization",
+    );
+
     return response;
   } catch (error) {
     console.error("Error in auth handler:", error);
     const errorResponse = c.json(
-      { 
+      {
         error: "Internal server error",
         message: error instanceof Error ? error.message : String(error),
-        ...(process.env.NODE_ENV === 'development' && { 
-          stack: error instanceof Error ? error.stack : undefined
-        })
+        ...(process.env.NODE_ENV === "development" && {
+          stack: error instanceof Error ? error.stack : undefined,
+        }),
       },
-      500
+      500,
     );
-    
+
     // Ensure CORS headers are set on error responses
-    errorResponse.headers.set('Access-Control-Allow-Origin', '*');
-    errorResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    errorResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    
+    errorResponse.headers.set("Access-Control-Allow-Origin", "*");
+    errorResponse.headers.set(
+      "Access-Control-Allow-Methods",
+      "GET, POST, OPTIONS",
+    );
+    errorResponse.headers.set(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization",
+    );
+
     return errorResponse;
   }
 });

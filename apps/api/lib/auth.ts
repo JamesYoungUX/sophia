@@ -63,7 +63,7 @@ export function createAuth(
 
     // Configure trusted origins for authentication
     trustedOrigins: allowedOrigins,
-    
+
     // Session configuration for OAuth state management
     session: {
       cookieCache: {
@@ -98,7 +98,7 @@ export function createAuth(
 
     // OAuth providers
     // TODO: Add user access control for production deployment
-    // Options: 1) Domain restriction in Google Console, 2) User allowlist in database, 
+    // Options: 1) Domain restriction in Google Console, 2) User allowlist in database,
     // 3) Invitation-only system with admin approval workflow
     socialProviders: {
       google: {

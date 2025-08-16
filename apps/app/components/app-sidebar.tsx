@@ -1,8 +1,8 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import * as React from "react"
 import {
+  Bone,
   BookOpen,
   Bot,
   Frame,
@@ -11,20 +11,20 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
-  Bone,
-} from "lucide-react"
+} from "lucide-react";
+import * as React from "react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { TeamSwitcher } from "@/components/team-switcher"
-import { FaviconIcon } from "@/components/favicon-icon"
+import { FaviconIcon } from "@/components/favicon-icon";
+import { NavMain } from "@/components/nav-main";
+import { NavProjects } from "@/components/nav-projects";
+import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@repo/ui"
+} from "@repo/ui";
 
 // This is sample data.
 const data = {
@@ -71,86 +71,123 @@ const data = {
         },
       ],
     },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
   ],
   management: [
     {
       name: "Care Plans",
       url: "#",
       icon: Frame,
+      items: [
+        {
+          name: "Care Plan A",
+          url: "#",
+          icon: Frame,
+        },
+        {
+          name: "Care Plan B",
+          url: "#",
+          icon: Frame,
+        },
+      ],
     },
     {
       name: "Access",
       url: "#",
       icon: PieChart,
+      items: [
+        {
+          name: "Access Log",
+          url: "#",
+          icon: PieChart,
+        },
+        {
+          name: "Permissions",
+          url: "#",
+          icon: PieChart,
+        },
+      ],
     },
     {
       name: "Agents",
       url: "#",
       icon: Map,
+      items: [
+        {
+          name: "Genesis (Model)",
+          url: "#",
+          icon: Bot,
+        },
+        {
+          name: "Explorer (Model)",
+          url: "#",
+          icon: Bot,
+        },
+        {
+          name: "Quantum (Model)",
+          url: "#",
+          icon: Bot,
+        },
+      ],
     },
     {
       name: "Documentation",
       url: "#",
       icon: BookOpen,
+      items: [
+        {
+          name: "API Reference",
+          url: "#",
+          icon: BookOpen,
+        },
+        {
+          name: "User Guide",
+          url: "#",
+          icon: BookOpen,
+        },
+      ],
+    },
+    {
+      name: "Settings",
+      url: "#",
+      icon: Settings2,
+      items: [
+        {
+          name: "General",
+          url: "#",
+          icon: Settings2,
+        },
+        {
+          name: "Team",
+          url: "#",
+          icon: Settings2,
+        },
+        {
+          name: "Billing",
+          url: "#",
+          icon: Settings2,
+        },
+        {
+          name: "Limits",
+          url: "#",
+          icon: Settings2,
+        },
+      ],
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+    <Sidebar data-testid="sidebar" collapsible="icon" {...props}>
+      <SidebarHeader data-testid="sidebar-header">
+        <TeamSwitcher data-testid="team-switcher-root" teams={data.teams} />
       </SidebarHeader>
-      <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.management} />
+      <SidebarContent data-testid="sidebar-content">
+        <NavMain data-testid="nav-main" items={data.navMain} />
+        <NavProjects data-testid="nav-projects" projects={data.management} />
       </SidebarContent>
-      <SidebarFooter>
-      </SidebarFooter>
+      <SidebarFooter data-testid="sidebar-footer"></SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

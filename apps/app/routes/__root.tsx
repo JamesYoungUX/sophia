@@ -2,10 +2,15 @@
 /* SPDX-License-Identifier: MIT */
 
 import { LoginForm } from "@/components/login-form";
-import { createRootRoute, Outlet, useNavigate } from "@tanstack/react-router";
+import { auth } from "@/lib/auth";
+import {
+  createRootRoute,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useEffect } from "react";
-import { auth } from "@/lib/auth";
 
 export const Route = createRootRoute({
   component: Root,
@@ -14,13 +19,17 @@ export const Route = createRootRoute({
 export function Root() {
   const { data: session, isPending } = auth.useSession();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // Redirect to home after successful login
+  // Redirect to dashboard after successful login only if on root or login
   useEffect(() => {
-    if (session) {
-      navigate({ to: "/" });
+    if (
+      session &&
+      (location.pathname === "/" || location.pathname === "/login")
+    ) {
+      navigate({ to: "/dashboard" });
     }
-  }, [session, navigate]);
+  }, [session, navigate, location.pathname]);
 
   if (isPending) {
     return <div>Loading...</div>; // Or a proper loading spinner

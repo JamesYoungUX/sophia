@@ -1,10 +1,10 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronsUpDown, Plus } from "lucide-react"
+import { ChevronsUpDown, Plus } from "lucide-react";
+import * as React from "react";
 
 import {
   DropdownMenu,
@@ -14,28 +14,26 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@repo/ui"
-import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@repo/ui"
+} from "@repo/ui";
 
 export function TeamSwitcher({
   teams,
 }: {
   teams: {
-    name: string
-    logo: React.ElementType
-    plan: string
-  }[]
+    name: string;
+    logo: React.ElementType;
+    plan: string;
+  }[];
 }) {
-  const { isMobile } = useSidebar()
-  const [activeTeam, setActiveTeam] = React.useState(teams[0])
+  const { isMobile } = useSidebar();
+  const [activeTeam, setActiveTeam] = React.useState(teams[0]);
 
   return (
-    <SidebarMenu>
+    <SidebarMenu data-testid="team-switcher-root">
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -47,7 +45,9 @@ export function TeamSwitcher({
                 <activeTeam.logo className="size-6" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{activeTeam.name}</span>
+                <span className="truncate font-semibold">
+                  {activeTeam.name}
+                </span>
                 <span className="truncate text-xs">{activeTeam.plan}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
@@ -86,5 +86,5 @@ export function TeamSwitcher({
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }
