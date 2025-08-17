@@ -1,10 +1,11 @@
-// TODO: These tests are commented out due to module resolution issues with '../../lib/auth' in the current test environment.
-// Re-enable and fix when the test environment supports mocking or resolving the auth module.
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
+/// <reference types="vitest/globals" />
+import { SidebarProvider } from "@repo/ui";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { auth } from "../../lib/auth";
 import { NavUser } from "../nav-user";
 
 vi.mock("../../lib/auth", () => ({
@@ -13,7 +14,9 @@ vi.mock("../../lib/auth", () => ({
     signOut: vi.fn(),
   },
 }));
-const { auth } = require("../../lib/auth");
+vi.mock("@tanstack/react-router", () => ({
+  useRouter: vi.fn(),
+}));
 
 describe("NavUser", () => {
   const mockSession = {
@@ -32,7 +35,11 @@ describe("NavUser", () => {
   it("renders user information correctly", () => {
     auth.useSession.mockReturnValue({ data: mockSession });
 
-    render(<NavUser />);
+    render(
+      <SidebarProvider>
+        <NavUser />
+      </SidebarProvider>,
+    );
 
     expect(screen.getByText("John Doe")).toBeInTheDocument();
     expect(screen.getByText("john@example.com")).toBeInTheDocument();
@@ -52,7 +59,11 @@ describe("NavUser", () => {
       },
     });
 
-    render(<NavUser />);
+    render(
+      <SidebarProvider>
+        <NavUser />
+      </SidebarProvider>,
+    );
 
     expect(screen.getByTestId("avatar-fallback")).toHaveTextContent("JD");
   });
@@ -64,7 +75,11 @@ describe("NavUser", () => {
     auth.useSession.mockReturnValue({ data: mockSession });
     useRouter.mockReturnValue({ navigate: mockNavigate });
 
-    render(<NavUser />);
+    render(
+      <SidebarProvider>
+        <NavUser />
+      </SidebarProvider>,
+    );
 
     const accountItem = screen
       .getByText("Account")
@@ -83,7 +98,11 @@ describe("NavUser", () => {
     auth.signOut = mockSignOut;
     useRouter.mockReturnValue({ navigate: mockNavigate });
 
-    render(<NavUser />);
+    render(
+      <SidebarProvider>
+        <NavUser />
+      </SidebarProvider>,
+    );
 
     const logoutItem = screen
       .getByText("Log out")
@@ -96,7 +115,11 @@ describe("NavUser", () => {
   it("shows default values when no session", () => {
     auth.useSession.mockReturnValue({ data: null });
 
-    render(<NavUser />);
+    render(
+      <SidebarProvider>
+        <NavUser />
+      </SidebarProvider>,
+    );
 
     expect(screen.getByText("User")).toBeInTheDocument();
     expect(screen.getByText("user@example.com")).toBeInTheDocument();
