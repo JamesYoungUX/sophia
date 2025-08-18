@@ -137,6 +137,7 @@ jobs:
           APP_ORIGIN: https://app.jyoung2k.org
           GOOGLE_CLOUD_PROJECT: sophiacursor
           GA_MEASUREMENT_ID: G-4JL6QRQW47
+          VITE_API_URL: https://sophia-api.jyoung2k.workers.dev
         
       - name: "Build web component"
         run: bun --filter @repo/web build
