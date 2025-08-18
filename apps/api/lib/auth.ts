@@ -112,9 +112,16 @@ export function createAuth(
       google: {
         clientId: process.env.GOOGLE_CLIENT_ID || "",
         clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-        callbackURL: `${process.env.BETTER_AUTH_URL || "https://sophia-api.jyoung2k.workers.dev"}/dashboard`,
+        callbackURL: `${process.env.BETTER_AUTH_URL || "https://sophia-api.jyoung2k.workers.dev"}/api/auth/callback/google`,
         scope: ["email", "profile"],
       },
+    },
+
+    // Configure redirect after successful authentication
+    redirects: {
+      signIn: "/dashboard",
+      signUp: "/dashboard", 
+      signOut: "/",
     },
 
     plugins: [
