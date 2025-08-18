@@ -1,13 +1,25 @@
-# React Starter Kit
+# Sophia Medical Application
 
-<a href="https://github.com/kriasoft/react-starter-kit?sponsor=1"><img src="https://img.shields.io/badge/-GitHub-%23555.svg?logo=github-sponsors" height="20"></a>
-<a href="https://discord.gg/2nKEnKq"><img src="https://img.shields.io/discord/643523529131950086?label=Chat" height="20"></a>
-<a href="https://github.com/kriasoft/react-starter-kit/stargazers"><img src="https://img.shields.io/github/stars/kriasoft/react-starter-kit.svg?style=social&label=Star&maxAge=3600" height="20"></a>
-<a href="https://x.com/ReactStarter"><img src="https://img.shields.io/twitter/follow/ReactStarter.svg?style=social&label=Follow&maxAge=3600" height="20"></a>
+🏥 **Live Application**: [app.jyoung2k.org](https://app.jyoung2k.org)  
+🌐 **Website**: [www.jyoung2k.org](https://www.jyoung2k.org)  
+🔗 **API**: [sophia-api.jyoung2k.workers.dev](https://sophia-api.jyoung2k.workers.dev)
 
-Building modern web applications shouldn't require weeks of configuration hell. This React Starter Kit eliminates the tedious setup work so you can focus on what matters: shipping great products.
+A comprehensive medical application platform built with modern web technologies, featuring AI-powered healthcare agents, patient management systems, and compliance tools. Deployed on Cloudflare's global edge network for optimal performance.
 
-Designed for developers who value both speed and quality, this template provides a complete foundation for full-stack applications. From solo projects to team collaborations, it scales with your ambitions while maintaining the developer experience you deserve.
+## 🚀 Live Deployment
+
+The Sophia medical application is currently deployed and accessible at:
+
+- **Main Application**: https://app.jyoung2k.org - React-based medical interface with AI agents
+- **Marketing Site**: https://www.jyoung2k.org - Landing and information pages  
+- **API Backend**: https://sophia-api.jyoung2k.workers.dev - tRPC API with database connectivity
+
+### Features Available
+- 🤖 **AI Medical Agents**: Genesis Agent, Care Manager, Quantum Agent, Patient Engagement, Compliance Agent
+- 🏥 **Department Management**: Cardiology, Orthopedics, and more
+- 📊 **Patient Care Plans**: Comprehensive lifecycle management
+- 🔐 **Authentication**: Secure user management with Better Auth
+- 📱 **Responsive Design**: Mobile-first interface with modern UI components
 
 ## What You Get
 
@@ -150,29 +162,60 @@ Open <http://localhost:5173> to see your React app running. The marketing websit
 
 ## Production Deployment
 
-### 1. Environment Setup
+The Sophia application is deployed using Cloudflare Workers and Pages with custom domain configuration.
 
-Ensure your production environment variables are configured:
-
-```bash
-# Set secrets in Cloudflare Workers
-bun wrangler secret put BETTER_AUTH_SECRET --env=production
-bun wrangler secret put OPENAI_API_KEY --env=production
-```
-
-### 2. Build and Deploy
+### Current Deployment
 
 ```bash
-# Build all packages
-bun --filter @repo/app build
-bun --filter @repo/web build
-bun --filter @repo/edge build
+# React Application (Cloudflare Pages)
+cd apps/app
+bun run build
+wrangler pages deploy dist --project-name sophia-app
 
-# Deploy to Cloudflare Workers
-bun wrangler deploy --env=production
+# API Worker (Cloudflare Workers)  
+cd apps/api
+wrangler deploy
+
+# Web/Marketing Site (Cloudflare Pages)
+cd apps/edge
+wrangler pages deploy dist --project-name sophia-web
 ```
 
-Your application will be live on your Cloudflare Workers domain within seconds. The edge-first architecture ensures optimal performance regardless of user location.
+### Infrastructure Management
+
+The infrastructure is managed with Terraform:
+
+```bash
+cd infra/environments/preview
+terraform plan
+terraform apply
+```
+
+### Custom Domain Setup
+
+DNS records are configured via Terraform:
+- `app.jyoung2k.org` → React application
+- `www.jyoung2k.org` → Marketing website  
+- `sophia-api.jyoung2k.workers.dev` → API backend
+
+### Environment Variables
+
+Configure these in `.env.local` and Cloudflare Workers:
+
+```bash
+# Database
+DATABASE_URL=postgresql://...
+HYPERDRIVE_ID=...
+
+# Authentication  
+BETTER_AUTH_SECRET=...
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+
+# Cloudflare
+CLOUDFLARE_API_TOKEN=...
+CLOUDFLARE_ACCOUNT_ID=...
+```
 
 ## Contributors 👨‍💻
 
