@@ -92,7 +92,7 @@ function DashboardPage() {
                 </ul>
               </div>
             </div>
-            <StatsCard 
+            <StatsCard
               title="Preoperative Stats"
               data={[
                 { name: 'Completed', value: 42, color: 'completed' },
@@ -101,7 +101,7 @@ function DashboardPage() {
               ]}
               total={65}
             />
-            <StatsCard 
+            <StatsCard
               title="Postoperative Stats"
               data={[
                 { name: 'Recovered', value: 38, color: 'completed' },

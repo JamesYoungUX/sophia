@@ -62,7 +62,7 @@ function ClinicalSupportPage() {
               <p className="text-muted-foreground mb-6">
                 Access clinical resources, guidelines, and support tools to assist with patient care decisions.
               </p>
-              
+
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <div className="p-4 border rounded-lg">
                   <h3 className="font-semibold mb-2">Clinical Guidelines</h3>

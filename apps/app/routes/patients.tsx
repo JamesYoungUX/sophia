@@ -62,7 +62,7 @@ function PatientsPage() {
               <p className="text-muted-foreground mb-6">
                 Manage patient records, appointments, and care coordination.
               </p>
-              
+
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <div className="p-4 border rounded-lg">
                   <h3 className="font-semibold mb-2">Patient Registry</h3>

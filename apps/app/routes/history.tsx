@@ -62,7 +62,7 @@ function HistoryPage() {
               <p className="text-muted-foreground mb-6">
                 View your recent activities, system logs, and audit trail.
               </p>
-              
+
               <div className="space-y-4">
                 <div className="p-4 border rounded-lg">
                   <div className="flex justify-between items-start mb-2">
@@ -71,7 +71,7 @@ function HistoryPage() {
                   </div>
                   <p className="text-sm text-muted-foreground">Viewed medical records for Patient ID: 12345</p>
                 </div>
-                
+
                 <div className="p-4 border rounded-lg">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-semibold">Surgery Scheduled</h3>
@@ -79,7 +79,7 @@ function HistoryPage() {
                   </div>
                   <p className="text-sm text-muted-foreground">Scheduled cardiac procedure for Patient ID: 67890</p>
                 </div>
-                
+
                 <div className="p-4 border rounded-lg">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-semibold">Clinical Guidelines Updated</h3>
@@ -87,7 +87,7 @@ function HistoryPage() {
                   </div>
                   <p className="text-sm text-muted-foreground">Updated post-operative care protocols</p>
                 </div>
-                
+
                 <div className="p-4 border rounded-lg">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-semibold">Lab Results Reviewed</h3>
@@ -95,7 +95,7 @@ function HistoryPage() {
                   </div>
                   <p className="text-sm text-muted-foreground">Analyzed blood work for multiple patients</p>
                 </div>
-                
+
                 <div className="p-4 border rounded-lg">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-semibold">System Login</h3>

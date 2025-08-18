@@ -88,6 +88,8 @@ export default defineProject(({ mode }) => {
     test: {
       ...{ cache: { dir: "../../.cache/vitest" } },
       environment: "happy-dom",
+      setupFiles: ["./test-setup.ts"],
+      globals: true,
     },
   };
 });

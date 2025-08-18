@@ -90,7 +90,7 @@ function AccountPage() {
               Manage your account settings and preferences.
             </p>
           </div>
-          
+
           <div className="grid gap-6">
             {/* Profile Card */}
             <Card>
@@ -113,7 +113,7 @@ function AccountPage() {
                     <p className="text-sm text-muted-foreground">{user.email}</p>
                   </div>
                 </div>
-                
+
                 <div className="grid gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="name">Display Name</Label>
@@ -137,7 +137,7 @@ function AccountPage() {
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="flex justify-end">
                   <Button>Save Changes</Button>
                 </div>
@@ -160,7 +160,7 @@ function AccountPage() {
                 <div className="grid gap-2">
                   <Label className="text-sm font-medium">Member Since</Label>
                   <p className="text-sm text-muted-foreground">
-                    {session?.user?.createdAt 
+                    {session?.user?.createdAt
                       ? new Date(session.user.createdAt).toLocaleDateString()
                       : "Recently"
                     }
