@@ -1,14 +1,24 @@
-output "cache_namespace_id" {
-  description = "The ID of the KV cache namespace"
+output "hyperdrive_id" {
+  description = "Hyperdrive configuration ID"
+  value       = module.hyperdrive.hyperdrive_id
+}
+
+output "kv_namespace_id" {
+  description = "KV namespace ID for cache"
   value       = cloudflare_workers_kv_namespace.cache.id
 }
 
-output "hyperdrive_direct_id" {
-  description = "ID of the direct (no-cache) Hyperdrive configuration"
-  value       = module.hyperdrive.hyperdrive_direct_id
+output "pages_url" {
+  description = "Cloudflare Pages URL"
+  value       = cloudflare_pages_project.sophia.subdomain
 }
 
-output "hyperdrive_cached_id" {
-  description = "ID of the cached (60s) Hyperdrive configuration"
-  value       = module.hyperdrive.hyperdrive_cached_id
+output "pages_project_name" {
+  description = "Cloudflare Pages project name"
+  value       = cloudflare_pages_project.sophia.name
+}
+
+output "custom_domain" {
+  description = "Custom domain for the site"
+  value       = var.domain_name != "" ? var.domain_name : cloudflare_pages_project.sophia.subdomain
 }

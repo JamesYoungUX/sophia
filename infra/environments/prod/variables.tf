@@ -60,3 +60,9 @@ variable "domain_name" {
   description = "Base domain name for production deployment (e.g., example.com)"
   type        = string
 }
+
+variable "ga_measurement_id" {
+  description = "Google Analytics measurement ID"
+  type        = string
+  default     = ""
+}

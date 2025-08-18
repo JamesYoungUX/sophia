@@ -3,7 +3,7 @@
 # terraform.tfvars is automatically loaded by Terraform
 
 # Project name - used as prefix for all resources
-project_name = "example"
+project_name = "sophia"
 
 # Cloudflare credentials
 # cloudflare_api_token = "your-cloudflare-api-token"
@@ -11,10 +11,13 @@ project_name = "example"
 # cloudflare_zone_id   = "your-cloudflare-zone-id"  # Required for DNS management
 
 # Domain configuration for production deployment
-# domain_name = "example.com"
+# domain_name = "yourdomain.com"
+
+# Google Analytics
+# ga_measurement_id = "G-4JL6QRQW47"
 
 # External database configuration (e.g., Neon, Supabase, PlanetScale)
 # database_host     = "ep-cool-darkness-123456.us-east-2.aws.neon.tech"
-# database_name     = "example"
+# database_name     = "neondb"
 # database_user     = "neondb_owner"
 # database_password = "your-database-password-here"
