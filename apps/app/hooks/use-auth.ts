@@ -32,12 +32,10 @@ export function useAuth() {
   const signInWithGoogle = async () => {
     try {
       console.log("Starting Google OAuth");
-      console.log("Callback URL:", `${window.location.origin}/dashboard`);
       
-      // Use Better Auth's signIn.social method with redirect handling
-      await auth.signIn.social({
+      // Use Better Auth's signIn.social method - let server handle redirects
+      const result = await auth.signIn.social({
         provider: "google",
-        callbackURL: `${window.location.origin}/dashboard`,
         fetchOptions: {
           onRequest: (context) => {
             console.log("OAuth request:", context);
@@ -51,6 +49,7 @@ export function useAuth() {
         }
       });
       
+      console.log("OAuth result:", result);
       return { success: true };
     } catch (error) {
       console.error("OAuth error:", error);
