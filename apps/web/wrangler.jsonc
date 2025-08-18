@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
-  "name": "example-web",
+  "name": "sophia-web",
   "compatibility_date": "2025-08-07",
   "workers_dev": false,
 
@@ -12,29 +12,29 @@
   // Environment-specific configurations
   "env": {
     "production": {
-      "name": "example-web",
+      "name": "sophia-web",
       "routes": [
         {
-          "pattern": "example.com/*",
-          "zone_name": "your_zone_name_here"
+          "pattern": "www.jyoung2k.org/*",
+          "zone_name": "jyoung2k.org"
         }
       ]
     },
     "staging": {
-      "name": "example-web-staging",
+      "name": "sophia-web-staging",
       "routes": [
         {
-          "pattern": "staging.example.com/*",
-          "zone_name": "your_zone_name_here"
+          "pattern": "staging-www.jyoung2k.org/*",
+          "zone_name": "jyoung2k.org"
         }
       ]
     },
     "preview": {
-      "name": "example-web-preview",
+      "name": "sophia-web-preview",
       "routes": [
         {
-          "pattern": "preview.example.com/*",
-          "zone_name": "your_zone_name_here"
+          "pattern": "preview-www.jyoung2k.org/*",
+          "zone_name": "jyoung2k.org"
         }
       ]
     }
