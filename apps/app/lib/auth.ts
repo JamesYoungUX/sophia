@@ -4,7 +4,7 @@
 import { createAuthClient } from "better-auth/react";
 
 export const auth = createAuthClient({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8791',
+  baseURL: import.meta.env.VITE_API_URL || 'https://sophia-api.jyoung2k.workers.dev',
   fetchOptions: {
     credentials: 'include',
   },
