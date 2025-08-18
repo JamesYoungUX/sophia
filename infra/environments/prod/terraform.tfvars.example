@@ -16,6 +16,14 @@ project_name = "sophia"
 # Google Analytics
 # ga_measurement_id = "G-4JL6QRQW47"
 
+# Authentication secrets
+# better_auth_secret = "your-better-auth-secret"
+# google_client_id = "your-google-client-id"
+# google_client_secret = "your-google-client-secret"
+
+# OpenAI API
+# openai_api_key = "your-openai-api-key"
+
 # External database configuration (e.g., Neon, Supabase, PlanetScale)
 # database_host     = "ep-cool-darkness-123456.us-east-2.aws.neon.tech"
 # database_name     = "neondb"
