@@ -8,15 +8,35 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 import { Route as rootRouteImport } from './../routes/__root'
 import { Route as PatientsRouteImport } from './../routes/patients'
 import { Route as HistoryRouteImport } from './../routes/history'
+import { Route as GenesisModelRouteImport } from './../routes/genesis-model'
+import { Route as GenesisAgentRouteImport } from './../routes/genesis-agent'
 import { Route as DashboardRouteImport } from './../routes/dashboard'
+import { Route as ConsoleRouteImport } from './../routes/console'
+import { Route as ComplianceAgentRouteImport } from './../routes/compliance-agent'
 import { Route as ClinicalSupportRouteImport } from './../routes/clinical-support'
+import { Route as CarePlansRouteImport } from './../routes/care-plans'
 import { Route as AccountRouteImport } from './../routes/account'
 import { Route as AboutRouteImport } from './../routes/about'
 import { Route as IndexRouteImport } from './../routes/index'
+import { Route as DocsCarePlanLifecycleRouteImport } from './../routes/docs/care-plan-lifecycle'
+import { Route as AgentsQuantumAgentRouteImport } from './../routes/agents/quantum-agent'
+import { Route as AgentsPatientEngagementAgentRouteImport } from './../routes/agents/patient-engagement-agent'
+import { Route as AgentsGenesisAgentRouteImport } from './../routes/agents/genesis-agent'
+import { Route as AgentsCareManagerAgentRouteImport } from './../routes/agents/care-manager-agent'
+import { Route as AgentsLayoutRouteImport } from './../routes/agents/_layout'
 
+const AgentsRouteImport = createFileRoute('/agents')()
+
+const AgentsRoute = AgentsRouteImport.update({
+  id: '/agents',
+  path: '/agents',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PatientsRoute = PatientsRouteImport.update({
   id: '/patients',
   path: '/patients',
@@ -27,14 +47,39 @@ const HistoryRoute = HistoryRouteImport.update({
   path: '/history',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GenesisModelRoute = GenesisModelRouteImport.update({
+  id: '/genesis-model',
+  path: '/genesis-model',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GenesisAgentRoute = GenesisAgentRouteImport.update({
+  id: '/genesis-agent',
+  path: '/genesis-agent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConsoleRoute = ConsoleRouteImport.update({
+  id: '/console',
+  path: '/console',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComplianceAgentRoute = ComplianceAgentRouteImport.update({
+  id: '/compliance-agent',
+  path: '/compliance-agent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ClinicalSupportRoute = ClinicalSupportRouteImport.update({
   id: '/clinical-support',
   path: '/clinical-support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CarePlansRoute = CarePlansRouteImport.update({
+  id: '/care-plans',
+  path: '/care-plans',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AccountRoute = AccountRouteImport.update({
@@ -52,34 +97,98 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocsCarePlanLifecycleRoute = DocsCarePlanLifecycleRouteImport.update({
+  id: '/docs/care-plan-lifecycle',
+  path: '/docs/care-plan-lifecycle',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentsQuantumAgentRoute = AgentsQuantumAgentRouteImport.update({
+  id: '/quantum-agent',
+  path: '/quantum-agent',
+  getParentRoute: () => AgentsRoute,
+} as any)
+const AgentsPatientEngagementAgentRoute =
+  AgentsPatientEngagementAgentRouteImport.update({
+    id: '/patient-engagement-agent',
+    path: '/patient-engagement-agent',
+    getParentRoute: () => AgentsRoute,
+  } as any)
+const AgentsGenesisAgentRoute = AgentsGenesisAgentRouteImport.update({
+  id: '/genesis-agent',
+  path: '/genesis-agent',
+  getParentRoute: () => AgentsRoute,
+} as any)
+const AgentsCareManagerAgentRoute = AgentsCareManagerAgentRouteImport.update({
+  id: '/care-manager-agent',
+  path: '/care-manager-agent',
+  getParentRoute: () => AgentsRoute,
+} as any)
+const AgentsLayoutRoute = AgentsLayoutRouteImport.update({
+  id: '/_layout',
+  getParentRoute: () => AgentsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/care-plans': typeof CarePlansRoute
   '/clinical-support': typeof ClinicalSupportRoute
+  '/compliance-agent': typeof ComplianceAgentRoute
+  '/console': typeof ConsoleRoute
   '/dashboard': typeof DashboardRoute
+  '/genesis-agent': typeof GenesisAgentRoute
+  '/genesis-model': typeof GenesisModelRoute
   '/history': typeof HistoryRoute
   '/patients': typeof PatientsRoute
+  '/agents': typeof AgentsLayoutRoute
+  '/agents/care-manager-agent': typeof AgentsCareManagerAgentRoute
+  '/agents/genesis-agent': typeof AgentsGenesisAgentRoute
+  '/agents/patient-engagement-agent': typeof AgentsPatientEngagementAgentRoute
+  '/agents/quantum-agent': typeof AgentsQuantumAgentRoute
+  '/docs/care-plan-lifecycle': typeof DocsCarePlanLifecycleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/care-plans': typeof CarePlansRoute
   '/clinical-support': typeof ClinicalSupportRoute
+  '/compliance-agent': typeof ComplianceAgentRoute
+  '/console': typeof ConsoleRoute
   '/dashboard': typeof DashboardRoute
+  '/genesis-agent': typeof GenesisAgentRoute
+  '/genesis-model': typeof GenesisModelRoute
   '/history': typeof HistoryRoute
   '/patients': typeof PatientsRoute
+  '/agents': typeof AgentsLayoutRoute
+  '/agents/care-manager-agent': typeof AgentsCareManagerAgentRoute
+  '/agents/genesis-agent': typeof AgentsGenesisAgentRoute
+  '/agents/patient-engagement-agent': typeof AgentsPatientEngagementAgentRoute
+  '/agents/quantum-agent': typeof AgentsQuantumAgentRoute
+  '/docs/care-plan-lifecycle': typeof DocsCarePlanLifecycleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/care-plans': typeof CarePlansRoute
   '/clinical-support': typeof ClinicalSupportRoute
+  '/compliance-agent': typeof ComplianceAgentRoute
+  '/console': typeof ConsoleRoute
   '/dashboard': typeof DashboardRoute
+  '/genesis-agent': typeof GenesisAgentRoute
+  '/genesis-model': typeof GenesisModelRoute
   '/history': typeof HistoryRoute
   '/patients': typeof PatientsRoute
+  '/agents': typeof AgentsRouteWithChildren
+  '/agents/_layout': typeof AgentsLayoutRoute
+  '/agents/care-manager-agent': typeof AgentsCareManagerAgentRoute
+  '/agents/genesis-agent': typeof AgentsGenesisAgentRoute
+  '/agents/patient-engagement-agent': typeof AgentsPatientEngagementAgentRoute
+  '/agents/quantum-agent': typeof AgentsQuantumAgentRoute
+  '/docs/care-plan-lifecycle': typeof DocsCarePlanLifecycleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -87,42 +196,90 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/account'
+    | '/care-plans'
     | '/clinical-support'
+    | '/compliance-agent'
+    | '/console'
     | '/dashboard'
+    | '/genesis-agent'
+    | '/genesis-model'
     | '/history'
     | '/patients'
+    | '/agents'
+    | '/agents/care-manager-agent'
+    | '/agents/genesis-agent'
+    | '/agents/patient-engagement-agent'
+    | '/agents/quantum-agent'
+    | '/docs/care-plan-lifecycle'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/account'
+    | '/care-plans'
     | '/clinical-support'
+    | '/compliance-agent'
+    | '/console'
     | '/dashboard'
+    | '/genesis-agent'
+    | '/genesis-model'
     | '/history'
     | '/patients'
+    | '/agents'
+    | '/agents/care-manager-agent'
+    | '/agents/genesis-agent'
+    | '/agents/patient-engagement-agent'
+    | '/agents/quantum-agent'
+    | '/docs/care-plan-lifecycle'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/account'
+    | '/care-plans'
     | '/clinical-support'
+    | '/compliance-agent'
+    | '/console'
     | '/dashboard'
+    | '/genesis-agent'
+    | '/genesis-model'
     | '/history'
     | '/patients'
+    | '/agents'
+    | '/agents/_layout'
+    | '/agents/care-manager-agent'
+    | '/agents/genesis-agent'
+    | '/agents/patient-engagement-agent'
+    | '/agents/quantum-agent'
+    | '/docs/care-plan-lifecycle'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AccountRoute: typeof AccountRoute
+  CarePlansRoute: typeof CarePlansRoute
   ClinicalSupportRoute: typeof ClinicalSupportRoute
+  ComplianceAgentRoute: typeof ComplianceAgentRoute
+  ConsoleRoute: typeof ConsoleRoute
   DashboardRoute: typeof DashboardRoute
+  GenesisAgentRoute: typeof GenesisAgentRoute
+  GenesisModelRoute: typeof GenesisModelRoute
   HistoryRoute: typeof HistoryRoute
   PatientsRoute: typeof PatientsRoute
+  AgentsRoute: typeof AgentsRouteWithChildren
+  DocsCarePlanLifecycleRoute: typeof DocsCarePlanLifecycleRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/agents': {
+      id: '/agents'
+      path: '/agents'
+      fullPath: '/agents'
+      preLoaderRoute: typeof AgentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/patients': {
       id: '/patients'
       path: '/patients'
@@ -137,6 +294,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/genesis-model': {
+      id: '/genesis-model'
+      path: '/genesis-model'
+      fullPath: '/genesis-model'
+      preLoaderRoute: typeof GenesisModelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/genesis-agent': {
+      id: '/genesis-agent'
+      path: '/genesis-agent'
+      fullPath: '/genesis-agent'
+      preLoaderRoute: typeof GenesisAgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -144,11 +315,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/console': {
+      id: '/console'
+      path: '/console'
+      fullPath: '/console'
+      preLoaderRoute: typeof ConsoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compliance-agent': {
+      id: '/compliance-agent'
+      path: '/compliance-agent'
+      fullPath: '/compliance-agent'
+      preLoaderRoute: typeof ComplianceAgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/clinical-support': {
       id: '/clinical-support'
       path: '/clinical-support'
       fullPath: '/clinical-support'
       preLoaderRoute: typeof ClinicalSupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/care-plans': {
+      id: '/care-plans'
+      path: '/care-plans'
+      fullPath: '/care-plans'
+      preLoaderRoute: typeof CarePlansRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/account': {
@@ -172,17 +364,85 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/docs/care-plan-lifecycle': {
+      id: '/docs/care-plan-lifecycle'
+      path: '/docs/care-plan-lifecycle'
+      fullPath: '/docs/care-plan-lifecycle'
+      preLoaderRoute: typeof DocsCarePlanLifecycleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agents/quantum-agent': {
+      id: '/agents/quantum-agent'
+      path: '/quantum-agent'
+      fullPath: '/agents/quantum-agent'
+      preLoaderRoute: typeof AgentsQuantumAgentRouteImport
+      parentRoute: typeof AgentsRoute
+    }
+    '/agents/patient-engagement-agent': {
+      id: '/agents/patient-engagement-agent'
+      path: '/patient-engagement-agent'
+      fullPath: '/agents/patient-engagement-agent'
+      preLoaderRoute: typeof AgentsPatientEngagementAgentRouteImport
+      parentRoute: typeof AgentsRoute
+    }
+    '/agents/genesis-agent': {
+      id: '/agents/genesis-agent'
+      path: '/genesis-agent'
+      fullPath: '/agents/genesis-agent'
+      preLoaderRoute: typeof AgentsGenesisAgentRouteImport
+      parentRoute: typeof AgentsRoute
+    }
+    '/agents/care-manager-agent': {
+      id: '/agents/care-manager-agent'
+      path: '/care-manager-agent'
+      fullPath: '/agents/care-manager-agent'
+      preLoaderRoute: typeof AgentsCareManagerAgentRouteImport
+      parentRoute: typeof AgentsRoute
+    }
+    '/agents/_layout': {
+      id: '/agents/_layout'
+      path: '/agents'
+      fullPath: '/agents'
+      preLoaderRoute: typeof AgentsLayoutRouteImport
+      parentRoute: typeof AgentsRoute
+    }
   }
 }
+
+interface AgentsRouteChildren {
+  AgentsLayoutRoute: typeof AgentsLayoutRoute
+  AgentsCareManagerAgentRoute: typeof AgentsCareManagerAgentRoute
+  AgentsGenesisAgentRoute: typeof AgentsGenesisAgentRoute
+  AgentsPatientEngagementAgentRoute: typeof AgentsPatientEngagementAgentRoute
+  AgentsQuantumAgentRoute: typeof AgentsQuantumAgentRoute
+}
+
+const AgentsRouteChildren: AgentsRouteChildren = {
+  AgentsLayoutRoute: AgentsLayoutRoute,
+  AgentsCareManagerAgentRoute: AgentsCareManagerAgentRoute,
+  AgentsGenesisAgentRoute: AgentsGenesisAgentRoute,
+  AgentsPatientEngagementAgentRoute: AgentsPatientEngagementAgentRoute,
+  AgentsQuantumAgentRoute: AgentsQuantumAgentRoute,
+}
+
+const AgentsRouteWithChildren =
+  AgentsRoute._addFileChildren(AgentsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AccountRoute: AccountRoute,
+  CarePlansRoute: CarePlansRoute,
   ClinicalSupportRoute: ClinicalSupportRoute,
+  ComplianceAgentRoute: ComplianceAgentRoute,
+  ConsoleRoute: ConsoleRoute,
   DashboardRoute: DashboardRoute,
+  GenesisAgentRoute: GenesisAgentRoute,
+  GenesisModelRoute: GenesisModelRoute,
   HistoryRoute: HistoryRoute,
   PatientsRoute: PatientsRoute,
+  AgentsRoute: AgentsRouteWithChildren,
+  DocsCarePlanLifecycleRoute: DocsCarePlanLifecycleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

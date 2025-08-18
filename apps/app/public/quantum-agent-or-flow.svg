@@ -1,0 +1,40 @@
+<svg width="900" height="600" viewBox="0 0 900 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="60" y="30" width="320" height="50" rx="8" fill="#f3f4f6" stroke="#d1d5db"/>
+  <text x="220" y="60" text-anchor="middle" font-size="17" fill="#111827">Quantum Agent ingests EHR, scheduling, and outcome data</text>
+  <rect x="120" y="110" width="320" height="50" rx="8" fill="#f3f4f6" stroke="#d1d5db"/>
+  <text x="280" y="140" text-anchor="middle" font-size="17" fill="#111827">Track patient progress through care pathway</text>
+  <rect x="200" y="200" width="320" height="50" rx="8" fill="#f3f4f6" stroke="#d1d5db"/>
+  <text x="360" y="230" text-anchor="middle" font-size="17" fill="#111827">Critical pre-op step missed?</text>
+  <rect x="320" y="300" width="320" height="50" rx="8" fill="#f3f4f6" stroke="#d1d5db"/>
+  <text x="480" y="330" text-anchor="middle" font-size="17" fill="#111827">Flag to care team, recommend intervention</text>
+  <rect x="320" y="390" width="320" height="50" rx="8" fill="#f3f4f6" stroke="#d1d5db"/>
+  <text x="480" y="420" text-anchor="middle" font-size="17" fill="#111827">Intervention performed?</text>
+  <rect x="320" y="480" width="320" height="50" rx="8" fill="#f3f4f6" stroke="#d1d5db"/>
+  <text x="480" y="510" text-anchor="middle" font-size="17" fill="#111827">Patient proceeds to surgery</text>
+  <rect x="660" y="480" width="320" height="50" rx="8" fill="#f3f4f6" stroke="#d1d5db"/>
+  <text x="820" y="510" text-anchor="middle" font-size="17" fill="#111827">Surgery canceled or delayed</text>
+  <rect x="320" y="550" width="320" height="40" rx="8" fill="#f3f4f6" stroke="#d1d5db"/>
+  <text x="480" y="575" text-anchor="middle" font-size="15" fill="#111827">OR utilized as scheduled</text>
+  <rect x="660" y="550" width="320" height="40" rx="8" fill="#f3f4f6" stroke="#d1d5db"/>
+  <text x="820" y="575" text-anchor="middle" font-size="15" fill="#111827">OR time wasted, cost incurred</text>
+  <!-- Arrows and decision labels -->
+  <line x1="220" y1="80" x2="280" y2="110" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="280" y1="160" x2="360" y2="200" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- Decision: Yes (down) -->
+  <line x1="360" y1="250" x2="480" y2="300" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="400" y="285" font-size="15" fill="#111827">Yes</text>
+  <!-- Decision: No (right) -->
+  <line x1="520" y1="225" x2="820" y2="505" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="700" y="350" font-size="15" fill="#111827">No</text>
+  <!-- Continue flow -->
+  <line x1="480" y1="350" x2="480" y2="390" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="480" y1="440" x2="480" y2="480" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="480" y1="530" x2="480" y2="550" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="820" y1="505" x2="820" y2="530" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="820" y1="530" x2="820" y2="550" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L6,4 L2,6" fill="none" stroke="#6b7280" stroke-width="2" />
+    </marker>
+  </defs>
+</svg>
