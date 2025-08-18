@@ -128,10 +128,15 @@ jobs:
           bun --version
           ls -la apps/
           
-      # Build components with error handling
+      # Build components with required environment variables
       - name: "Build app component"
         run: bun --filter @repo/app build
         continue-on-error: false
+        env:
+          APP_NAME: Sophia
+          APP_ORIGIN: https://app.jyoung2k.org
+          GOOGLE_CLOUD_PROJECT: sophiacursor
+          GA_MEASUREMENT_ID: G-4JL6QRQW47
         
       - name: "Build web component"
         run: bun --filter @repo/web build
