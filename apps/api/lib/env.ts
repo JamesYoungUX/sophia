@@ -16,6 +16,8 @@ export const envSchema = z.object({
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
   OPENAI_API_KEY: z.string(),
+  HYPERDRIVE: z.any().optional(),
+  HYPERDRIVE_CACHED: z.any().optional(),
 });
 
 /**

@@ -50,7 +50,8 @@ export function createAuth(
 
   return betterAuth({
     secret: env.BETTER_AUTH_SECRET,
-    baseURL: process.env.BETTER_AUTH_URL || "http://localhost:8791",
+    baseURL: process.env.BETTER_AUTH_URL || "https://sophia-api.jyoung2k.workers.dev",
+    basePath: "/api/auth",
 
     // Configure CORS and origins
     cors: {
@@ -69,6 +70,13 @@ export function createAuth(
       cookieCache: {
         enabled: true,
         maxAge: 60 * 60 * 24 * 7, // 7 days
+      },
+      cookieName: "better-auth.session_token",
+      cookieOptions: {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        domain: ".jyoung2k.org", // Re-enable domain for cross-subdomain sharing
       },
     },
     database: drizzleAdapter(db, {
@@ -104,6 +112,8 @@ export function createAuth(
       google: {
         clientId: process.env.GOOGLE_CLIENT_ID || "",
         clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+        callbackURL: `${process.env.BETTER_AUTH_URL || "https://sophia-api.jyoung2k.workers.dev"}/dashboard`,
+        scope: ["email", "profile"],
       },
     },
 

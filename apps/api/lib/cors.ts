@@ -1,4 +1,4 @@
-import { Context } from "hono";
+import type { Context } from "hono";
 
 // Dynamically build allowed origins from env or fallback to defaults
 export const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS
@@ -15,7 +15,18 @@ export const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS
       "http://localhost:8788",
       "http://127.0.0.1:8788",
       "http://localhost:4321",
-      // Add production domains here as needed
+      // Production domains
+      "https://app.jyoung2k.org",
+      "https://www.jyoung2k.org",
+      "https://fcef7590.sophia-app.pages.dev",
+      "https://main.sophia-app.pages.dev",
+      "https://a830f2d1.sophia-app.pages.dev",
+      "https://3b9002fa.sophia-app.pages.dev",
+      "https://68ffae69.sophia-app.pages.dev",
+      "https://e248b0b3.sophia-app.pages.dev",
+      "https://789d2480.sophia-app.pages.dev",
+      "https://e0d3ede0.sophia-app.pages.dev",
+      "https://be8673a7.sophia-app.pages.dev",
     ];
 
 // Add debug logging for allowed origins

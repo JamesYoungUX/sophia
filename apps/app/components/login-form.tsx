@@ -1,35 +1,16 @@
-import { cn } from "@/lib/utils";
-import { Button, Input, Label } from "@repo/ui";
-import * as React from "react";
-import { auth } from "../lib/auth";
+import { useState } from "react";
+import { Button } from "@repo/ui/components/button";
+import { Input } from "@repo/ui/components/input";
+import { Label } from "@repo/ui/components/label";
+import { useAuth } from "@/hooks/use-auth";
+import { useNavigate } from "@tanstack/react-router";
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"form">) {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isGoogleLoading, setIsGoogleLoading] = React.useState(false);
-  const [formError, setFormError] = React.useState<string | null>(null);
-  const { refetch } = auth.useSession();
-
-  const handleGoogleLogin = async () => {
-    setIsGoogleLoading(true);
-    setFormError(null);
-    
-    try {
-      await auth.signIn.social({
-        provider: "google",
-        callbackURL: "http://localhost:5173/dashboard",
-      });
-    } catch (error) {
-      console.error("Google login failed:", error);
-      setFormError("Google login failed. Please try again.");
-    } finally {
-      setIsGoogleLoading(false);
-    }
-  };
+export function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [formError, setFormError] = useState<string | null>(null);
+  const { login, signInWithGoogle, isLoading } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,50 +32,36 @@ export function LoginForm({
       return;
     }
     
-    setIsLoading(true);
+    const result = await login({ email: email.trim(), password });
+    
+    if (result.success) {
+      navigate({ to: "/dashboard" });
+    } else {
+      const errorMessage = result.error instanceof Error 
+        ? result.error.message 
+        : "Login failed. Please try again.";
+      setFormError(errorMessage);
+    }
+  };
+
+  const handleGoogleSignIn = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log("Google sign-in button clicked");
     
     try {
-      const { error } = await auth.signIn.email({
-        email: email.trim(),
-        password,
-        callbackURL: "/dashboard",
-        rememberMe: true
-      }, {
-        onRequest: () => {
-          setIsLoading(true);
-        },
-        onSuccess: () => {
-          // Session will be updated automatically
-        },
-        onError: (ctx) => {
-          if (ctx?.error) {
-            throw new Error(ctx.error.message || "Authentication failed");
-          }
-        }
-      });
+      const result = await signInWithGoogle();
+      console.log("Google sign-in result:", result);
       
-      if (error) {
-        // Handle specific error types
-        if (error.message?.includes("Invalid credentials") || 
-            error.message?.includes("USER_NOT_FOUND") ||
-            error.message?.includes("INVALID_PASSWORD")) {
-          throw new Error("Invalid email or password. Please check your credentials and try again.");
-        } else if (error.message?.includes("ACCOUNT_LOCKED")) {
-          throw new Error("Your account has been temporarily locked. Please try again later.");
-        } else if (error.message?.includes("NETWORK")) {
-          throw new Error("Network error. Please check your connection and try again.");
-        } else {
-          throw new Error(error.message || "Login failed. Please try again.");
-        }
+      if (!result.success) {
+        const errorMessage = result.error instanceof Error 
+          ? result.error.message 
+          : "Google sign-in failed. Please try again.";
+        console.error("Google sign-in error:", errorMessage);
+        setFormError(errorMessage);
       }
-      
-      // Refresh the session data
-      await refetch();
-    } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred. Please try again.";
-      setFormError(errorMessage);
-    } finally {
-      setIsLoading(false);
+    } catch (error) {
+      console.error("Google sign-in exception:", error);
+      setFormError("An unexpected error occurred during sign-in.");
     }
   };
 
@@ -113,8 +80,7 @@ export function LoginForm({
             <h1 className="text-2xl font-bold">Login to your account</h1>
           </div>
           <form
-            className={cn("grid gap-6", className)}
-            {...props}
+            className="grid gap-6"
             onSubmit={handleSubmit}
           >
             <div className="grid gap-2">
@@ -123,10 +89,10 @@ export function LoginForm({
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 required
                 autoComplete="email"
-                disabled={isLoading || isGoogleLoading}
+                disabled={isLoading}
                 placeholder="Enter your email"
                 className={formError && !email.trim() ? "border-red-500 focus:border-red-500" : ""}
               />
@@ -142,10 +108,10 @@ export function LoginForm({
                 id="password"
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 required
                 autoComplete="current-password"
-                disabled={isLoading || isGoogleLoading}
+                disabled={isLoading}
                 placeholder="Enter your password"
                 className={formError && !password.trim() ? "border-red-500 focus:border-red-500" : ""}
               />
@@ -153,7 +119,7 @@ export function LoginForm({
             <Button
               className="w-full"
               type="submit"
-              disabled={isLoading || isGoogleLoading}
+              disabled={isLoading}
             >
               {isLoading ? "Signing in..." : "Sign in"}
             </Button>
@@ -167,8 +133,8 @@ export function LoginForm({
               variant="outline"
               className="w-full flex items-center justify-center gap-2"
               type="button"
-              disabled={isLoading || isGoogleLoading}
-              onClick={handleGoogleLogin}
+              disabled={isLoading}
+              onClick={handleGoogleSignIn}
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -176,7 +142,7 @@ export function LoginForm({
                 <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                 <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
               </svg>
-              {isGoogleLoading ? "Connecting to Google..." : "Continue with Google"}
+              {isLoading ? "Connecting to Google..." : "Continue with Google"}
             </Button>
           </form>
           {formError && (

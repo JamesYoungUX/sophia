@@ -14,14 +14,21 @@ resource "cloudflare_dns_record" "preview_slots" {
 }
 
 # Main application domains
+resource "cloudflare_pages_domain" "app_domain" {
+  account_id   = var.cloudflare_account_id
+  project_name = "sophia-app"
+  name         = "app.jyoung2k.org"
+}
+
 resource "cloudflare_dns_record" "app_subdomain" {
   zone_id = var.cloudflare_zone_id
   name    = "app"
   type    = "CNAME"
-  content = "5a5eb1c2.sophia-app.pages.dev"
+  content = "c3ad6a0e.sophia-app.pages.dev"
   ttl     = 1 # Auto TTL
   proxied = true
   comment = "React application"
+  depends_on = [cloudflare_pages_domain.app_domain]
 }
 
 resource "cloudflare_dns_record" "www_subdomain" {

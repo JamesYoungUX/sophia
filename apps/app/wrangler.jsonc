@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
-  "name": "example-app",
+  "name": "sophia-app",
   "compatibility_date": "2025-08-07",
   "workers_dev": false,
 
@@ -12,77 +12,29 @@
   // which handles all remaining traffic via catch-all patterns
   "env": {
     "production": {
-      "name": "example-app",
+      "name": "sophia-app",
       "routes": [
         {
-          "pattern": "example.com/_app/*",
-          "zone_name": "your_zone_name_here"
-        },
-        {
-          "pattern": "example.com/login",
-          "zone_name": "your_zone_name_here"
-        },
-        {
-          "pattern": "example.com/account*",
-          "zone_name": "your_zone_name_here"
-        },
-        {
-          "pattern": "example.com/billing*",
-          "zone_name": "your_zone_name_here"
-        },
-        {
-          "pattern": "example.com/team*",
-          "zone_name": "your_zone_name_here"
+          "pattern": "app.jyoung2k.org/*",
+          "zone_name": "jyoung2k.org"
         }
       ]
     },
     "staging": {
-      "name": "example-app-staging",
+      "name": "sophia-app-staging",
       "routes": [
         {
-          "pattern": "staging.example.com/_app/*",
-          "zone_name": "your_zone_name_here"
-        },
-        {
-          "pattern": "staging.example.com/login",
-          "zone_name": "your_zone_name_here"
-        },
-        {
-          "pattern": "staging.example.com/account*",
-          "zone_name": "your_zone_name_here"
-        },
-        {
-          "pattern": "staging.example.com/billing*",
-          "zone_name": "your_zone_name_here"
-        },
-        {
-          "pattern": "staging.example.com/team*",
-          "zone_name": "your_zone_name_here"
+          "pattern": "staging-app.jyoung2k.org/*",
+          "zone_name": "jyoung2k.org"
         }
       ]
     },
     "preview": {
-      "name": "example-app-preview",
+      "name": "sophia-app-preview",
       "routes": [
         {
-          "pattern": "preview.example.com/_app/*",
-          "zone_name": "your_zone_name_here"
-        },
-        {
-          "pattern": "preview.example.com/login",
-          "zone_name": "your_zone_name_here"
-        },
-        {
-          "pattern": "preview.example.com/account*",
-          "zone_name": "your_zone_name_here"
-        },
-        {
-          "pattern": "preview.example.com/billing*",
-          "zone_name": "your_zone_name_here"
-        },
-        {
-          "pattern": "preview.example.com/team*",
-          "zone_name": "your_zone_name_here"
+          "pattern": "preview-app.jyoung2k.org/*",
+          "zone_name": "jyoung2k.org"
         }
       ]
     }
