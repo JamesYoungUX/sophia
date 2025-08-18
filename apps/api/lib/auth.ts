@@ -134,6 +134,18 @@ export function createAuth(
         domain: ".jyoung2k.org",
       },
       useSecureCookies: true,
+      cookies: {
+        sessionToken: {
+          name: "better-auth.session_token",
+          attributes: {
+            httpOnly: true,
+            secure: true,
+            sameSite: "lax",
+            domain: ".jyoung2k.org",
+            path: "/",
+          },
+        },
+      },
     },
     
     trustedOrigins: [
