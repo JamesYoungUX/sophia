@@ -1,8 +1,58 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { auth } from "@/lib/auth";
+import { AppSidebar } from "@/components/app-sidebar";
+import { NavUser } from "@/components/nav-user";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  Separator,
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@repo/ui";
 
 export const Route = createFileRoute("/docs/care-plan-lifecycle")({
-  component: () => (
-    <div className="flex flex-1 flex-col gap-4 p-4 2xl:p-8 3xl:p-12 4xl:p-16 w-full">
+  beforeLoad: async () => {
+    const session = await auth.getSession();
+    if (!session) {
+      throw redirect({
+        to: "/",
+      });
+    }
+  },
+  component: CarePlanLifecyclePage,
+});
+
+function CarePlanLifecyclePage() {
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 h-4" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem className="hidden md:block">
+                <BreadcrumbLink href="/dashboard">
+                  Platform
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="hidden md:block" />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Care Plan Lifecycle</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          <div className="ml-auto flex items-center space-x-4">
+            <NavUser />
+          </div>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4 2xl:p-8 3xl:p-12 4xl:p-16 w-full">
       <h1 className="text-3xl font-bold mb-4">
         Care Plan Lifecycle & Agent Roles
       </h1>
@@ -72,6 +122,8 @@ export const Route = createFileRoute("/docs/care-plan-lifecycle")({
           </li>
         </ul>
       </div>
-    </div>
-  ),
-});
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  );
+}

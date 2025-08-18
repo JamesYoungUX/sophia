@@ -1,0 +1,19 @@
+{
+  "name": "sophia-api",
+  "compatibility_date": "2025-08-18",
+  "main": "index.ts",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "ENVIRONMENT": "production"
+  },
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "c79730e46dc54af79bc89c25e175ef5e"
+    },
+    {
+      "binding": "HYPERDRIVE_CACHED", 
+      "id": "fb0ae8cff3c14945a424cbfe25e511dd"
+    }
+  ]
+}

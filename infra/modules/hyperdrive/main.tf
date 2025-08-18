@@ -13,7 +13,7 @@ resource "cloudflare_hyperdrive_config" "direct" {
     user     = var.database_user
   }
 
-  origin_connection_limit = 60
+  origin_connection_limit = 20
 
   caching = {
     disabled = true
@@ -35,7 +35,7 @@ resource "cloudflare_hyperdrive_config" "cached" {
     user     = var.database_user
   }
 
-  origin_connection_limit = 60
+  origin_connection_limit = 20
 
   caching = {
     disabled               = false

@@ -23,7 +23,7 @@ const complianceTodos = [
   },
 ];
 
-export const Route = createFileRoute("/compliance-agent")({
+export const Route = createFileRoute("/agents/compliance-agent")({
   component: () => (
     <div className="flex flex-1 flex-col gap-4 p-4 2xl:p-8 3xl:p-12 4xl:p-16 w-full">
       <h1 className="text-3xl font-bold mb-4">Compliance Agent</h1>
