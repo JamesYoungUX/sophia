@@ -137,17 +137,18 @@ export function createAuth(
       database: {
         generateId: false,
       },
-      cookies: {
-        sessionToken: {
-          name: "better-auth.session_token",
-          httpOnly: true,
-          secure: true,
-          sameSite: "none",
-          domain: ".jyoung2k.org",
-          path: "/",
-        },
+      crossSubDomainCookies: {
+        enabled: true,
+        domain: ".jyoung2k.org",
       },
+      useSecureCookies: true,
     },
+    
+    trustedOrigins: [
+      "https://app.jyoung2k.org",
+      "https://www.jyoung2k.org",
+      "https://sophia-api.jyoung2k.workers.dev",
+    ],
   });
 }
 
