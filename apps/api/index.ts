@@ -115,6 +115,29 @@ app.on(["GET", "POST"], "/api/auth/*", async (c) => {
     headers: Object.fromEntries(result.headers.entries()),
   });
 
+  // Fix cross-domain cookie issue by manually setting domain
+  if (c.req.path.includes('/callback/') && result.headers.get('set-cookie')) {
+    const response = new Response(result.body, {
+      status: result.status,
+      statusText: result.statusText,
+      headers: result.headers,
+    });
+    
+    // Get existing set-cookie headers
+    const setCookieHeaders = result.headers.get('set-cookie');
+    if (setCookieHeaders) {
+      // Modify cookie to include correct domain
+      const modifiedCookie = setCookieHeaders.replace(
+        /Domain=[^;]*/g, 
+        'Domain=.jyoung2k.org'
+      );
+      response.headers.set('set-cookie', modifiedCookie);
+      console.log('Modified cookie headers:', modifiedCookie);
+    }
+    
+    return response;
+  }
+
   return result;
 });
 
