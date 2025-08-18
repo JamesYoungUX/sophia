@@ -5,12 +5,14 @@ import {
   Bone,
   BookOpen,
   Bot,
-  Frame,
-  Heart,
+  ClipboardList,
+  Heart, // Add User icon
+  HeartHandshake,
   Map,
   PieChart,
   Settings2,
   SquareTerminal,
+  User, // Add User icon
 } from "lucide-react";
 import * as React from "react";
 
@@ -53,7 +55,7 @@ const data = {
   navMain: [
     {
       title: "Console",
-      url: "/dashboard",
+      url: "/console",
       icon: SquareTerminal,
       isActive: true,
       items: [
@@ -76,17 +78,22 @@ const data = {
     {
       name: "Care Plans",
       url: "#",
-      icon: Frame,
+      icon: ClipboardList,
       items: [
+        {
+          name: "Care Plans Overview",
+          url: "/care-plans",
+          icon: ClipboardList,
+        },
         {
           name: "Care Plan A",
           url: "#",
-          icon: Frame,
+          icon: ClipboardList,
         },
         {
           name: "Care Plan B",
           url: "#",
-          icon: Frame,
+          icon: ClipboardList,
         },
       ],
     },
@@ -113,19 +120,29 @@ const data = {
       icon: Map,
       items: [
         {
-          name: "Genesis (Model)",
-          url: "#",
+          name: "Genesis Agent",
+          url: "/agents/genesis-agent",
           icon: Bot,
         },
         {
-          name: "Explorer (Model)",
-          url: "#",
+          name: "Compliance Agent",
+          url: "/compliance-agent",
           icon: Bot,
         },
         {
-          name: "Quantum (Model)",
-          url: "#",
+          name: "Quantum Agent",
+          url: "/agents/quantum-agent",
           icon: Bot,
+        },
+        {
+          name: "Care Manager Agent",
+          url: "/agents/care-manager-agent",
+          icon: User, // Use User icon
+        },
+        {
+          name: "Patient Engagement Agent",
+          url: "/agents/patient-engagement-agent",
+          icon: HeartHandshake, // Use HeartHandshake icon
         },
       ],
     },
@@ -142,6 +159,11 @@ const data = {
         {
           name: "User Guide",
           url: "#",
+          icon: BookOpen,
+        },
+        {
+          name: "Care Plan Lifecycle & Agent Roles",
+          url: "/docs/care-plan-lifecycle",
           icon: BookOpen,
         },
       ],
@@ -178,15 +200,33 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar data-testid="sidebar" collapsible="icon" {...props}>
+    <Sidebar
+      data-testid="sidebar"
+      collapsible="icon"
+      className="flex flex-col h-full min-h-0"
+      {...props}
+    >
       <SidebarHeader data-testid="sidebar-header">
         <TeamSwitcher data-testid="team-switcher-root" teams={data.teams} />
       </SidebarHeader>
-      <SidebarContent data-testid="sidebar-content">
+      <SidebarContent
+        data-testid="sidebar-content"
+        className="flex-1 flex flex-col h-full min-h-0"
+      >
         <NavMain data-testid="nav-main" items={data.navMain} />
         <NavProjects data-testid="nav-projects" projects={data.management} />
       </SidebarContent>
-      <SidebarFooter data-testid="sidebar-footer"></SidebarFooter>
+      <SidebarFooter
+        data-testid="sidebar-footer"
+        className="h-16 flex items-center justify-center"
+      >
+        <a
+          href="/about"
+          className="sidebar-link text-center w-4/5 rounded bg-accent border border-primary py-2"
+        >
+          <span>About</span>
+        </a>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
