@@ -129,23 +129,13 @@ export function createAuth(
       database: {
         generateId: false,
       },
-      crossSubDomainCookies: {
-        enabled: true,
-        domain: ".jyoung2k.org",
-        additionalCookies: ["better-auth.session_token"],
-      },
       useSecureCookies: true,
-      cookies: {
-        session_token: {
-          name: "better-auth.session_token",
-          attributes: {
-            httpOnly: true,
-            secure: true,
-            sameSite: "lax",
-            domain: ".jyoung2k.org",
-            path: "/",
-          },
-        },
+      defaultCookieAttributes: {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        domain: ".jyoung2k.org",
+        path: "/",
       },
     },
     
