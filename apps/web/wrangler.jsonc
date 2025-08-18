@@ -2,5 +2,6 @@
   "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "sophia-web",
   "compatibility_date": "2025-08-07",
-  "workers_dev": false
+  "workers_dev": false,
+  "pages_build_output_dir": "dist"
 }
