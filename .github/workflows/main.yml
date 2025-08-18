@@ -103,7 +103,7 @@ jobs:
         with:
           bun-version: latest
       - run: bun install
-      - run: cd apps/app && bun run build
+      - run: bun run build --filter @repo/app
       - run: cd apps/app && npx wrangler pages deploy dist --project-name sophia-app
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
