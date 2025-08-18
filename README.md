@@ -1,5 +1,11 @@
 # Sophia Medical Application
 
+A modern medical application built with React, TypeScript, and Cloudflare Workers.
+
+## Live Deployment
+- **App**: https://app.jyoung2k.org
+- **API**: https://sophia-api.jyoung2k.workers.dev
+
 🏥 **Live Application**: [app.jyoung2k.org](https://app.jyoung2k.org)  
 🌐 **Website**: [www.jyoung2k.org](https://www.jyoung2k.org)  
 🔗 **API**: [sophia-api.jyoung2k.workers.dev](https://sophia-api.jyoung2k.workers.dev)
