@@ -62,8 +62,7 @@ export function createAuth(
       maxAge: 86400, // 24 hours
     },
 
-    // Configure trusted origins for authentication
-    trustedOrigins: allowedOrigins,
+    // Configure trusted origins for authentication (handled below)
 
     // Session configuration for OAuth state management
     session: {
