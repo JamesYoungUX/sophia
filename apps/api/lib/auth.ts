@@ -119,9 +119,9 @@ export function createAuth(
 
     // Configure redirect after successful authentication
     redirects: {
-      signIn: "/dashboard",
-      signUp: "/dashboard", 
-      signOut: "/",
+      signIn: "https://app.jyoung2k.org/dashboard",
+      signUp: "https://app.jyoung2k.org/dashboard", 
+      signOut: "https://app.jyoung2k.org/",
     },
 
     plugins: [
