@@ -70,13 +70,6 @@ export function createAuth(
         enabled: true,
         maxAge: 60 * 60 * 24 * 7, // 7 days
       },
-      cookieName: "better-auth.session_token",
-      cookieOptions: {
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
-        domain: ".jyoung2k.org", // Re-enable domain for cross-subdomain sharing
-      },
     },
     database: drizzleAdapter(db, {
       provider: "pg",
