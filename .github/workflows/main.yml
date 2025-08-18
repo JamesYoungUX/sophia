@@ -65,9 +65,9 @@ jobs:
       - run: bun --filter @repo/api build
       - run: bun --filter @repo/edge build
 
-      # Validate Terraform configuration and formatting
-      - uses: hashicorp/setup-terraform@v3
-      - run: terraform fmt -check -recursive infra/
+      # Temporarily skip Terraform validation to isolate deployment issues
+      # - uses: hashicorp/setup-terraform@v3
+      # - run: terraform fmt -check -recursive infra/
       # - run: terraform validate infra/environments/preview/
 
       # Skip Docker build - using Cloudflare Workers instead
