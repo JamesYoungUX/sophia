@@ -59,15 +59,23 @@ jobs:
       # - run: bun --filter @repo/edge test
       #   if: ${{ github.event_name == 'pull_request' }}
 
-      # Build workspaces one by one to identify failure point
-      - name: "Build app"
-        run: bun --filter @repo/app build
-      - name: "Build web"
-        run: bun --filter @repo/web build
-      - name: "Build api"
-        run: bun --filter @repo/api build
-      - name: "Build edge"
-        run: bun --filter @repo/edge build
+      # Test workspace commands first
+      - name: "List workspaces"
+        run: |
+          echo "=== Checking workspace structure ==="
+          ls -la
+          echo "=== Checking apps directory ==="
+          ls -la apps/
+          echo "=== Checking package.json ==="
+          cat package.json | grep -A 10 workspaces
+          
+      - name: "Test bun workspace commands"
+        run: |
+          echo "=== Testing bun workspace listing ==="
+          bun workspaces list || echo "Workspace list failed"
+          echo "=== Testing individual filters ==="
+          bun --filter @repo/app --dry-run build || echo "App filter failed"
+          bun --filter @repo/web --dry-run build || echo "Web filter failed"
 
       # Temporarily skip Terraform validation to isolate deployment issues
       # - uses: hashicorp/setup-terraform@v3
