@@ -157,7 +157,7 @@ jobs:
           echo "=== Checking dist directory ==="
           ls -la dist/
           echo "=== Attempting deployment ==="
-          npx wrangler pages deploy dist --project-name=sophia-app --compatibility-date=2025-08-18
+          npx wrangler pages deploy dist --project-name=sophia-app
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: 8732977951aa9f626b624082211be520
