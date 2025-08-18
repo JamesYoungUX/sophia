@@ -26,10 +26,12 @@ jobs:
       name: ${{ inputs.environment }}
       url: ${{ steps.pr.outputs.formatted }}
     steps:
-      - uses: kriasoft/pr-codename@v1
-        id: pr
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          template: ${{ inputs.url }}
-          token: ${{ github.token }}
-      # TODO: Add deployment steps
-      # - run: bun wrangler deploy --config apps/edge/wrangler.jsonc --env=${{ inputs.environment }}
+          bun-version: latest
+      - run: bun install
+      - run: bun --filter @repo/app build
+      - run: cd apps/app && npx wrangler pages deploy dist --project-name sophia-app --branch main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
