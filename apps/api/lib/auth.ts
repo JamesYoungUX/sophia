@@ -137,6 +137,16 @@ export function createAuth(
       database: {
         generateId: false,
       },
+      cookies: {
+        sessionToken: {
+          name: "better-auth.session_token",
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+          domain: ".jyoung2k.org",
+          path: "/",
+        },
+      },
     },
   });
 }
