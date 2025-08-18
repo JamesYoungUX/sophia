@@ -59,11 +59,15 @@ jobs:
       # - run: bun --filter @repo/edge test
       #   if: ${{ github.event_name == 'pull_request' }}
 
-      # Build all workspaces
-      - run: bun --filter @repo/app build
-      - run: bun --filter @repo/web build
-      - run: bun --filter @repo/api build
-      - run: bun --filter @repo/edge build
+      # Build workspaces one by one to identify failure point
+      - name: "Build app"
+        run: bun --filter @repo/app build
+      - name: "Build web"
+        run: bun --filter @repo/web build
+      - name: "Build api"
+        run: bun --filter @repo/api build
+      - name: "Build edge"
+        run: bun --filter @repo/edge build
 
       # Temporarily skip Terraform validation to isolate deployment issues
       # - uses: hashicorp/setup-terraform@v3
@@ -106,31 +110,28 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-      - run: bun install
+      - name: "Install dependencies"
+        run: bun install
       
-      # Build all components
-      - run: bun --filter @repo/app build
-      - run: bun --filter @repo/web build
-      - run: bun --filter @repo/api build
-      - run: bun --filter @repo/edge build
-      
-      # Deploy React app to Cloudflare Pages
-      - run: cd apps/app && npx wrangler pages deploy dist --project-name sophia-app
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      
-      # Deploy marketing site to Cloudflare Pages
-      - run: cd apps/web && npx wrangler pages deploy dist --project-name sophia-web
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      
-      # Deploy API worker
-      - run: cd apps/api && npx wrangler deploy
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      
-      # Deploy Edge worker
-      - run: cd apps/edge && npx wrangler deploy
+      # Test basic build first
+      - name: "Test basic build"
+        run: |
+          echo "Testing basic workspace commands..."
+          bun --version
+          ls -la apps/
+          
+      # Build components with error handling
+      - name: "Build app component"
+        run: bun --filter @repo/app build
+        continue-on-error: false
+        
+      - name: "Build web component"
+        run: bun --filter @repo/web build
+        continue-on-error: false
+        
+      # Only deploy app for now to test
+      - name: "Deploy React app to Cloudflare Pages"
+        run: cd apps/app && npx wrangler pages deploy dist --project-name sophia-app
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
