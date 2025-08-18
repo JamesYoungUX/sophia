@@ -59,6 +59,7 @@ jobs:
       #   if: ${{ github.event_name == 'pull_request' }}
 
       # Build all workspaces
+      - run: bun --filter @repo/app build
       - run: bun --filter @repo/web build
       - run: bun --filter @repo/api build
       - run: bun --filter @repo/edge build
@@ -68,15 +69,17 @@ jobs:
       - run: terraform fmt -check -recursive infra/
       # - run: terraform validate infra/environments/preview/
 
-      # Build Docker image (only on main branch pushes or manual triggers)
-      - run: docker build --tag api:${{ github.sha }} -f ./apps/api/Dockerfile .
-      - run: docker save api:${{ github.sha }} | gzip > api-image.tar.gz
+      # Skip Docker build - using Cloudflare Workers instead
 
       # Upload build artifacts
       - uses: actions/upload-artifact@v4
         with:
           name: "build"
-          path: "apps/web/dist\napps/edge/dist\napps/api/dist\napi-image.tar.gz\n"
+          path: |
+            apps/app/dist
+            apps/web/dist
+            apps/edge/dist
+            apps/api/dist
 
   deploy-preview:
     name: "Deploy"
@@ -86,7 +89,7 @@ jobs:
     with:
       name: Preview
       environment: preview
-      url: https://{codename}.example.com
+      url: https://preview.jyoung2k.org
     secrets: inherit
     permissions:
       deployments: write
@@ -103,8 +106,26 @@ jobs:
         with:
           bun-version: latest
       - run: bun install
-      - run: bun run build --filter @repo/app
+      - run: bun --filter @repo/app build
+      - run: bun --filter @repo/web build
+      
+      # Deploy React app to Cloudflare Pages
       - run: cd apps/app && npx wrangler pages deploy dist --project-name sophia-app
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      
+      # Deploy marketing site to Cloudflare Pages
+      - run: cd apps/web && npx wrangler pages deploy dist --project-name sophia-web
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      
+      # Deploy API worker
+      - run: cd apps/api && npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      
+      # Deploy Edge worker
+      - run: cd apps/edge && npx wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
@@ -116,7 +137,7 @@ jobs:
     with:
       name: Production
       environment: production
-      url: https://example.com
+      url: https://app.jyoung2k.org
     secrets: inherit
     permissions:
       deployments: write
