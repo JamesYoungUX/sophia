@@ -5,6 +5,7 @@
 
 import { useRouter } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
+import * as React from "react";
 
 import {
   Collapsible,
@@ -20,10 +21,21 @@ import {
   SidebarMenuSubItem,
 } from "@repo/ui";
 
+interface NavItem {
+  title: string;
+  url: string;
+  icon?: React.ComponentType;
+  isActive?: boolean;
+  items?: Array<{
+    title: string;
+    url: string;
+  }>;
+}
+
 export function NavMain({
   items,
   ...props
-}: { items: any[] } & React.HTMLAttributes<HTMLDivElement>) {
+}: { items: NavItem[] } & React.HTMLAttributes<HTMLDivElement>) {
   const router = useRouter();
 
   return (

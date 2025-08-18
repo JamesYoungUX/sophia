@@ -25,7 +25,7 @@ import {
 export function NavProjects({
   projects,
   ...props
-}: { projects: any[] } & React.HTMLAttributes<HTMLDivElement>) {
+}: { projects: Array<{ name: string; url: string; icon: React.ComponentType }> } & React.HTMLAttributes<HTMLDivElement>) {
   const { isMobile } = useSidebar();
   const [openGroup, setOpenGroup] = React.useState<string | null>(null);
 

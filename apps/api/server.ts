@@ -3,6 +3,7 @@
  */
 
 import { Hono } from "hono";
+import { serve } from "bun";
 import { getPlatformProxy } from "wrangler";
 import api from "./index.js";
 import { createAuth } from "./lib/auth.js";
@@ -36,7 +37,7 @@ app.route("/", api);
 
 // Start the server
 const port = 8787;
-const server = Bun.serve({
+serve({
   port,
   fetch: app.fetch,
 });

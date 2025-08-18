@@ -32,6 +32,7 @@ export const Route = createFileRoute("/clinical-support")({
 
 function ClinicalSupportPage() {
   const { data: session } = auth.useSession();
+  console.log('Session:', session); // TODO: Use session data.useSession();
 
   return (
     <SidebarProvider>
