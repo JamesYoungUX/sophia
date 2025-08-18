@@ -132,10 +132,11 @@ export function createAuth(
       crossSubDomainCookies: {
         enabled: true,
         domain: ".jyoung2k.org",
+        additionalCookies: ["better-auth.session_token"],
       },
       useSecureCookies: true,
       cookies: {
-        sessionToken: {
+        session_token: {
           name: "better-auth.session_token",
           attributes: {
             httpOnly: true,
