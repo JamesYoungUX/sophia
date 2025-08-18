@@ -142,26 +142,25 @@ jobs:
         run: bun --filter @repo/web build
         continue-on-error: false
         
-      # Test Cloudflare authentication first
+      # Test Cloudflare authentication only
       - name: "Test Cloudflare authentication"
         run: |
           echo "=== Testing Cloudflare API access ==="
           npx wrangler whoami
-          echo "=== Listing Pages projects ==="
-          npx wrangler pages project list
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           
-      # Deploy with simplified command
+      # Deploy with account ID specified
       - name: "Deploy React app to Cloudflare Pages"
         run: |
           cd apps/app
           echo "=== Checking dist directory ==="
           ls -la dist/
           echo "=== Attempting deployment ==="
-          npx wrangler pages deploy dist --project-name=sophia-app
+          npx wrangler pages deploy dist --project-name=sophia-app --compatibility-date=2025-08-18
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: 8732977951aa9f626b624082211be520
 
   deploy-prod:
     name: "Deploy"
