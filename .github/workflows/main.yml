@@ -93,18 +93,20 @@ jobs:
       pull-requests: read
 
   deploy-staging:
-    name: "Deploy"
+    name: "Deploy to Cloudflare Pages"
     needs: [build]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    uses: ./.github/workflows/deploy.yml
-    with:
-      name: Production
-      environment: production
-      url: https://app.jyoung2k.org
-    secrets: inherit
-    permissions:
-      deployments: write
-      pull-requests: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install
+      - run: cd apps/app && bun run build
+      - run: cd apps/app && npx wrangler pages deploy dist --project-name sophia-app
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
   deploy-prod:
     name: "Deploy"
