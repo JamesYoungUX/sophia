@@ -107,8 +107,12 @@ jobs:
         with:
           bun-version: latest
       - run: bun install
+      
+      # Build all components
       - run: bun --filter @repo/app build
       - run: bun --filter @repo/web build
+      - run: bun --filter @repo/api build
+      - run: bun --filter @repo/edge build
       
       # Deploy React app to Cloudflare Pages
       - run: cd apps/app && npx wrangler pages deploy dist --project-name sophia-app
