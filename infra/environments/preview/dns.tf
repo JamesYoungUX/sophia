@@ -21,13 +21,13 @@ resource "cloudflare_pages_domain" "app_domain" {
 }
 
 resource "cloudflare_dns_record" "app_subdomain" {
-  zone_id = var.cloudflare_zone_id
-  name    = "app"
-  type    = "CNAME"
-  content = "c3ad6a0e.sophia-app.pages.dev"
-  ttl     = 1 # Auto TTL
-  proxied = true
-  comment = "React application"
+  zone_id    = var.cloudflare_zone_id
+  name       = "app"
+  type       = "CNAME"
+  content    = "c3ad6a0e.sophia-app.pages.dev"
+  ttl        = 1 # Auto TTL
+  proxied    = true
+  comment    = "React application"
   depends_on = [cloudflare_pages_domain.app_domain]
 }
 

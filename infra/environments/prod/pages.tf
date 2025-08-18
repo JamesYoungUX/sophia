@@ -94,17 +94,17 @@ resource "cloudflare_pages_project" "app" {
 
 # Custom domains for production
 resource "cloudflare_pages_domain" "web" {
-  count      = var.domain_name != "" ? 1 : 0
-  account_id = var.cloudflare_account_id
+  count        = var.domain_name != "" ? 1 : 0
+  account_id   = var.cloudflare_account_id
   project_name = cloudflare_pages_project.web.name
-  domain     = var.domain_name
+  domain       = var.domain_name
 }
 
 resource "cloudflare_pages_domain" "app" {
-  count      = var.domain_name != "" ? 1 : 0
-  account_id = var.cloudflare_account_id
+  count        = var.domain_name != "" ? 1 : 0
+  account_id   = var.cloudflare_account_id
   project_name = cloudflare_pages_project.app.name
-  domain     = "app.${var.domain_name}"
+  domain       = "app.${var.domain_name}"
 }
 
 # DNS records for custom domains
