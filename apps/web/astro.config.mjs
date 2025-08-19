@@ -5,18 +5,32 @@ import react from "@astrojs/react";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 
-// Allows sharing root .env variables with Astro build process
-loadEnv(process.env.NODE_ENV || "development", "../..", "");
+// Load environment variables
+loadEnv(process.env.NODE_ENV || "production", "../../", "");
 
+// https://astro.build/config
 export default defineConfig({
-  srcDir: ".",
-  publicDir: "./public",
-  outDir: "./dist",
+  site: "https://app.jyoung2k.org",
   output: "static",
+  adapter: "@astrojs/cloudflare",
   integrations: [react()],
   vite: {
-    css: {
-      postcss: "./postcss.config.js",
+    ssr: {
+      // Ensure externalized deps don't break SSR
+      noExternal: ["@repo/ui"],
+    },
+    build: {
+      // Generate source maps for better debugging
+      sourcemap: true,
+      // Bundle size optimizations
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            react: ["react", "react-dom"],
+            vendor: ["@repo/ui"],
+          },
+        },
+      },
     },
   },
 });

@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [
+    "/_astro/*",
+    "/_image",
+    "/assets/*",
+    "/*.js",
+    "/*.css",
+    "/*.json",
+    "/*.txt",
+    "/*.ico",
+    "/*.png",
+    "/*.svg",
+    "/*.jpg",
+    "/*.jpeg",
+    "/*.webp",
+    "/*.gif",
+    "/api/*"
+  ]
+}

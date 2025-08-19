@@ -1,0 +1,22 @@
+{
+  "build": {
+    "command": "bun install && bun run build",
+    "directory": "dist",
+    "node_compat": true,
+    "environment": {
+      "NODE_VERSION": "18"
+    }
+  },
+  "deploymentTargets": {
+    "production": {
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "preview": {
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  }
+}
