@@ -95,7 +95,7 @@ app.use("*", async (c, next) => {
 });
 
 // Authentication routes - Better Auth handles all auth endpoints
-app.all("/api/auth/*", async (c) => {
+app.on(['GET', 'POST'], "/api/auth/*", async (c) => {
   const auth = c.get("auth");
   if (!auth) {
     console.error("Auth service not initialized");
