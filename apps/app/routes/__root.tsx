@@ -2,7 +2,6 @@
 /* SPDX-License-Identifier: MIT */
 
 import { LoginForm } from "@/components/login-form";
-import { auth } from "@/lib/auth";
 import {
   createRootRoute,
   Outlet,
@@ -11,39 +10,42 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useEffect } from "react";
+import { useAuth } from "../hooks/use-auth";
 
 export const Route = createRootRoute({
   component: Root,
 });
 
 export function Root() {
-  const { data: session, isPending, error } = auth.useSession();
+  const { user, session, isAuthenticated, isLoading, error } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   // Debug logging
   useEffect(() => {
     console.log("Root component - Session state:", {
+      user,
       session,
-      isPending,
+      isAuthenticated,
+      isLoading,
       error,
-      pathname: location.pathname
+      pathname: location.pathname,
     });
-  }, [session, isPending, error, location.pathname]);
+  }, [user, session, isAuthenticated, isLoading, error, location.pathname]);
 
   // Redirect to dashboard after successful login only if on root or login
   useEffect(() => {
     if (
-      session &&
+      isAuthenticated &&
       (location.pathname === "/" || location.pathname === "/login")
     ) {
       console.log("Redirecting to dashboard with session:", session);
       navigate({ to: "/dashboard" });
     }
-  }, [session, navigate, location.pathname]);
+  }, [isAuthenticated, session, navigate, location.pathname]);
 
   // Show loading state while checking session
-  if (isPending) {
+  if (isLoading) {
     console.log("Showing loading state");
     return (
       <div className="h-screen flex items-center justify-center">
@@ -55,14 +57,14 @@ export function Root() {
     );
   }
 
-  // Show login form if no session
-  if (!session) {
+  // Show login form if not authenticated
+  if (!isAuthenticated) {
     console.log("No session found, showing login form");
     return <LoginForm />;
   }
 
   // Render protected routes
-  console.log("Rendering protected routes for user:", session.user);
+  console.log("Rendering protected routes for user:", user);
   return (
     <>
       <Outlet />
