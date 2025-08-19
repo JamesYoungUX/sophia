@@ -5,8 +5,11 @@ console.log("[app] index.tsx entry loaded");
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { Provider } from "jotai";
 import { auth } from "./lib/auth";
 import { routeTree } from "./lib/routeTree.gen";
+import { store } from "./lib/store";
+import { AuthCallbackHandler } from "./components/auth-callback-handler";
 import "./styles/globals.css";
 
 const container = document.getElementById("root");
@@ -20,7 +23,11 @@ const router = createRouter({
 
 root.render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <AuthCallbackHandler>
+        <RouterProvider router={router} />
+      </AuthCallbackHandler>
+    </Provider>
   </StrictMode>,
 );
 
