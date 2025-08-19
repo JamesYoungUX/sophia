@@ -1,0 +1,14 @@
+[build]
+  command = "bun install && bun --bun run build"
+  publish = "apps/web/dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  BUN_VERSION = "1.2.19"
+
+[dev]
+  framework = "vite"
+  targetPort = 5173
+  port = 8888
+  autoLaunch = true
+  publish = "apps/web/dist"
