@@ -12,8 +12,7 @@ loadEnv(process.env.NODE_ENV || "production", "../../", "");
 // https://astro.build/config
 export default defineConfig({
   site: "https://app.jyoung2k.org",
-  output: "server",
-  adapter: cloudflare(),
+  output: "static",
   integrations: [react()],
   vite: {
     ssr: {
