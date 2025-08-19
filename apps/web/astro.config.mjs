@@ -2,6 +2,7 @@
 /* SPDX-License-Identifier: MIT */
 
 import react from "@astrojs/react";
+import cloudflare from "@astrojs/cloudflare";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 
@@ -12,7 +13,7 @@ loadEnv(process.env.NODE_ENV || "production", "../../", "");
 export default defineConfig({
   site: "https://app.jyoung2k.org",
   output: "static",
-  adapter: "@astrojs/cloudflare",
+  adapter: cloudflare(),
   integrations: [react()],
   vite: {
     ssr: {
