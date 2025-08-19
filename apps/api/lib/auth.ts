@@ -57,6 +57,21 @@ export function createAuth(
       process.env.BETTER_AUTH_URL || "https://sophia-api.jyoung2k.workers.dev",
     basePath: "/api/auth",
 
+    // Explicit cookie configuration for cross-site usage
+    cookies: {
+      sessionToken: {
+        name: "better-auth.session_token",
+        options: {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+          domain: ".jyoung2k.org",
+          path: "/",
+          maxAge: 60 * 60 * 24 * 7, // 7 days
+        },
+      },
+    },
+
     // Configure CORS and origins
     cors: {
       origin: allowedOrigins,
@@ -73,6 +88,13 @@ export function createAuth(
       cookieCache: {
         enabled: true,
         maxAge: 60 * 60 * 24 * 7, // 7 days
+      },
+      cookieAttributes: {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        domain: ".jyoung2k.org",
+        path: "/",
       },
     },
     database: drizzleAdapter(db, {
