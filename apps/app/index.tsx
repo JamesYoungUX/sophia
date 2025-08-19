@@ -1,15 +1,16 @@
 console.log("[app] index.tsx entry loaded");
+console.log("VITE_API_URL at runtime:", import.meta.env.VITE_API_URL);
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
 import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { Provider } from "jotai";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Provider } from "jotai";
+import { AuthCallbackHandler } from "./components/auth-callback-handler";
 import { auth } from "./lib/auth";
 import { routeTree } from "./lib/routeTree.gen";
 import { store } from "./lib/store";
-import { AuthCallbackHandler } from "./components/auth-callback-handler";
 import "./styles/globals.css";
 
 const container = document.getElementById("root");
