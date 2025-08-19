@@ -68,7 +68,7 @@ jobs:
           ls -la apps/
           echo "=== Checking package.json ==="
           cat package.json | grep -A 10 workspaces
-          
+
       - name: "Test bun workspace commands"
         run: |
           echo "=== Testing bun workspace listing ==="
@@ -120,14 +120,14 @@ jobs:
           bun-version: latest
       - name: "Install dependencies"
         run: bun install
-      
+
       # Test basic build first
       - name: "Test basic build"
         run: |
           echo "Testing basic workspace commands..."
           bun --version
           ls -la apps/
-          
+
       # Build components with required environment variables
       - name: "Build app component"
         run: bun --filter @repo/app build
@@ -137,12 +137,16 @@ jobs:
           APP_ORIGIN: https://app.jyoung2k.org
           GOOGLE_CLOUD_PROJECT: sophiacursor
           GA_MEASUREMENT_ID: G-4JL6QRQW47
-          VITE_API_URL: https://sophia-api.jyoung2k.workers.dev
-        
+          VITE_API_URL: https://api.jyoung2k.org
+          VITE_AUTH_URL: https://api.jyoung2k.org/api/auth
+
       - name: "Build web component"
         run: bun --filter @repo/web build
         continue-on-error: false
-        
+        env:
+          VITE_API_URL: https://api.jyoung2k.org
+          VITE_AUTH_URL: https://api.jyoung2k.org/api/auth
+
       # Test Cloudflare authentication only
       - name: "Test Cloudflare authentication"
         run: |
@@ -150,7 +154,7 @@ jobs:
           npx wrangler whoami
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          
+
       # Deploy all components
       - name: "Deploy React app to Cloudflare Pages"
         run: |
@@ -162,7 +166,7 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: 8732977951aa9f626b624082211be520
-          
+
       - name: "Deploy marketing site to Cloudflare Pages"
         run: |
           cd apps/web
@@ -173,7 +177,7 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: 8732977951aa9f626b624082211be520
-          
+
       - name: "Deploy API worker"
         run: |
           cd apps/api
@@ -184,7 +188,7 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: 8732977951aa9f626b624082211be520
-          
+
       - name: "Deploy Edge worker"
         run: |
           cd apps/edge
