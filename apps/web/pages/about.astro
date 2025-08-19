@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Separator } from '@repo/ui';
+import RouterWrapper from '@/components/RouterWrapper';
 
 const title = "About - React Starter Kit";
 const description = "Learn about React Starter Kit, a production-ready full-stack web application template built with modern technologies.";
@@ -22,14 +23,15 @@ const description = "Learn about React Starter Kit, a production-ready full-stac
 
     <!-- Mission Section -->
     <section class="mb-20">
-      <Card client:visible>
-        <CardHeader>
-          <CardTitle className="text-2xl">Our Mission</CardTitle>
-          <CardDescription>
-            Empowering developers to build faster, better web applications
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      <RouterWrapper>
+        <Card client:visible>
+          <CardHeader>
+            <CardTitle className="text-2xl">Our Mission</CardTitle>
+            <CardDescription>
+              Empowering developers to build faster, better web applications
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
           <p class="text-muted-foreground">
             React Starter Kit was created to bridge the gap between prototype
             and production. We believe that developers should focus on
@@ -183,6 +185,7 @@ const description = "Learn about React Starter Kit, a production-ready full-stac
           </div>
         </CardContent>
       </Card>
+    </RouterWrapper>
     </section>
 
     <!-- Team Section -->
