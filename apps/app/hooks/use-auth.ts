@@ -33,23 +33,12 @@ export function useAuth() {
     try {
       console.log("Starting Google OAuth");
       
-      // Use Better Auth's signIn.social method - let server handle redirects
-      const result = await auth.signIn.social({
-        provider: "google",
-        fetchOptions: {
-          onRequest: (context) => {
-            console.log("OAuth request:", context);
-          },
-          onResponse: (context) => {
-            console.log("OAuth response:", context);
-          },
-          onError: (context) => {
-            console.error("OAuth fetch error:", context);
-          }
-        }
-      });
+      // For browser-based OAuth, redirect to the OAuth URL
+      const baseURL = import.meta.env.VITE_API_URL || 'https://sophia-api.jyoung2k.workers.dev';
+      const oauthUrl = `${baseURL}/api/auth/sign-in/social?provider=google`;
+      console.log("Redirecting to OAuth URL:", oauthUrl);
       
-      console.log("OAuth result:", result);
+      window.location.href = oauthUrl;
       return { success: true };
     } catch (error) {
       console.error("OAuth error:", error);
