@@ -8,6 +8,17 @@
       content="The web's most popular Jamstack React template"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://accounts.google.com https://apis.google.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com;
+      connect-src 'self' https://sophia-api.jyoung2k.workers.dev https://accounts.google.com https://oauth2.googleapis.com;
+      img-src 'self' data: https:;
+      frame-src https://accounts.google.com;
+    " />
 
     <meta property="og:title" content="" />
     <meta property="og:type" content="" />
