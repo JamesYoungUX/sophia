@@ -97,7 +97,6 @@ export function createAuth(
     emailAndPassword: {
       enabled: true,
       requireEmailVerification: false, // Set to true if you want email verification
-      sendEmailVerificationOnSignUp: false, // Set to true if you want email verification
     },
 
     // OAuth providers - use centralized provider config
@@ -109,7 +108,7 @@ export function createAuth(
         callbackURL: getGoogleProviderConfig().callbackUrl,
         scope: getGoogleProviderConfig().scope,
         // pass additional optional params if supported by provider integration
-        prompt: getGoogleProviderConfig().prompt,
+        prompt: "consent" as const,
         accessType: getGoogleProviderConfig().accessType,
       },
     },
@@ -124,13 +123,13 @@ export function createAuth(
     // Add callbacks for debugging
     callbacks: {
       signIn: {
-        before: async (ctx: any) => {
+        before: async (ctx: { provider?: string; account?: unknown }) => {
           console.log("=== BEFORE SIGN IN ===");
           console.log("Provider:", ctx.provider);
           console.log("Account:", ctx.account);
           return ctx;
         },
-        after: async (ctx: any) => {
+        after: async (ctx: { user?: unknown; session?: unknown; account?: unknown }) => {
           console.log("=== AFTER SIGN IN ===");
           console.log("User:", ctx.user);
           console.log("Session:", ctx.session);
