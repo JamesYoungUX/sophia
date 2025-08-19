@@ -94,8 +94,8 @@ app.use("*", async (c, next) => {
   await next();
 });
 
-// Authentication routes - following Better Auth + Hono documentation pattern
-app.on(["GET", "POST"], "/api/auth/*", async (c) => {
+// Authentication routes - Better Auth handles all auth endpoints
+app.all("/api/auth/*", async (c) => {
   const auth = c.get("auth");
   if (!auth) {
     console.error("Auth service not initialized");
