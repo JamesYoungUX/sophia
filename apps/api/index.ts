@@ -144,26 +144,24 @@ app.get("/api/test-session", async (c) => {
     return c.json({ error: "Auth service not available" }, 503);
   }
   
-  console.log("=== TEST SESSION CREATION ===");
+  const response = new Response("Cookie test");
+  response.headers.set(
+    "Set-Cookie", 
+    "test-cookie=test-value; Domain=.jyoung2k.org; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=3600"
+  );
   
-  // Try to create a test session manually
-  try {
-    console.log("Test cookie created");
-    return new Response(JSON.stringify({ 
-      message: "Test session endpoint", 
-      cookieSet: true,
-      domain: ".jyoung2k.org"
-    }), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        "Set-Cookie": "test-session=test-value; Domain=.jyoung2k.org; Path=/; HttpOnly; Secure; SameSite=None"
-      }
-    });
-  } catch (error) {
-    console.error("Error creating test session:", error);
-    return c.json({ error: "Failed to create test session" }, 500);
-  }
+  console.log("Set-Cookie header:", response.headers.get("Set-Cookie"));
+  return response;
+});
+
+// Test OAuth callback endpoint with fake parameters
+app.get("/test-oauth-callback", async (c) => {
+  console.log("=== TEST OAUTH CALLBACK ===");
+  console.log("Testing OAuth callback handler with fake parameters");
+  
+  // Redirect to callback with test parameters
+  const testCallbackUrl = "https://sophia-api.jyoung2k.workers.dev/api/auth/callback/google?code=test_code&state=test_state";
+  return c.redirect(testCallbackUrl);
 });
 
 // tRPC API routes
