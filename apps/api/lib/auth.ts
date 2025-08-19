@@ -116,6 +116,25 @@ export function createAuth(
       signOut: "https://app.jyoung2k.org/",
     },
 
+    // Add callbacks for debugging
+    callbacks: {
+      signIn: {
+        before: async (ctx: any) => {
+          console.log("=== BEFORE SIGN IN ===");
+          console.log("Provider:", ctx.provider);
+          console.log("Account:", ctx.account);
+          return ctx;
+        },
+        after: async (ctx: any) => {
+          console.log("=== AFTER SIGN IN ===");
+          console.log("User:", ctx.user);
+          console.log("Session:", ctx.session);
+          console.log("Account:", ctx.account);
+          return ctx;
+        },
+      },
+    },
+
     plugins: [
       anonymous(),
       organization({
