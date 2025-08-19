@@ -126,11 +126,10 @@ app.on(["GET", "POST"], "/api/auth/*", async (c) => {
     // Get existing set-cookie headers
     const setCookieHeaders = result.headers.get('set-cookie');
     if (setCookieHeaders) {
-      // Modify cookie to include correct domain
-      const modifiedCookie = setCookieHeaders.replace(
-        /Domain=[^;]*/g, 
-        'Domain=.jyoung2k.org'
-      );
+      // Modify cookie to include correct domain and SameSite=None
+      const modifiedCookie = setCookieHeaders
+        .replace(/Domain=[^;]*/g, 'Domain=.jyoung2k.org')
+        .replace(/SameSite=[^;]*/g, 'SameSite=None');
       response.headers.set('set-cookie', modifiedCookie);
       console.log('Modified cookie headers:', modifiedCookie);
     }

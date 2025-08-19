@@ -133,7 +133,7 @@ export function createAuth(
       defaultCookieAttributes: {
         httpOnly: true,
         secure: true,
-        sameSite: "lax",
+        sameSite: "none",
         domain: ".jyoung2k.org",
         path: "/",
       },
