@@ -164,6 +164,7 @@ export function LoginForm() {
           >
             SSO (Coming Soon)
           </Button>
+          <div className="text-xs text-gray-400 text-center mt-4" data-testid="login-version">v.001</div>
         </div>
       </div>
       {/* Right: Placeholder space for future content */}
