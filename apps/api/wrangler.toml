@@ -6,3 +6,5 @@ compatibility_flags = ["nodejs_compat"]
 [vars]
 APP_NAME = "sophia"
 ENVIRONMENT = "development"
+API_BASE_URL = "https://api.jyoung2k.org"
+AUTH_CALLBACK_URL = "https://api.jyoung2k.org/api/auth/callback/google"

@@ -8,36 +8,60 @@ import { Provider } from "jotai";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { AuthCallbackHandler } from "./components/auth-callback-handler";
-import { auth } from "./lib/auth";
 import { routeTree } from "./lib/routeTree.gen";
 import { store } from "./lib/store";
 import "./styles/globals.css";
 
-const container = document.getElementById("root");
-const root = createRoot(container!);
+// Create the router instance
 const router = createRouter({
   routeTree,
   context: {
-    auth,
+    auth: undefined!, // We'll inject this in the provider
   },
 });
 
+// Register the router for type safety
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
+
+// Get the root element
+const container = document.getElementById("root");
+
+if (!container) {
+  throw new Error("Root element not found");
+}
+
+const root = createRoot(container);
+
+// Render the app
 root.render(
   <StrictMode>
     <Provider store={store}>
       <AuthCallbackHandler>
-        <RouterProvider router={router} />
+        <RouterProvider
+          router={router}
+          defaultErrorComponent={({ error }) => (
+            <div className="p-4 text-red-600">
+              <h2>Something went wrong</h2>
+              <p>{error.message}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+              >
+                Reload
+              </button>
+            </div>
+          )}
+        />
       </AuthCallbackHandler>
     </Provider>
   </StrictMode>,
 );
 
+// Enable HMR in development
 if (import.meta.hot) {
-  import.meta.hot.dispose(() => root.unmount());
-}
-
-declare module "@tanstack/react-router" {
-  interface Register {
-    router: typeof router;
-  }
+  import.meta.hot.dispose(() => router.invalidate());
 }
