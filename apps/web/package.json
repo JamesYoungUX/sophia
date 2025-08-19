@@ -13,6 +13,7 @@
     "pages:deploy": "wrangler pages deploy dist"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^10.1.0",
     "@astrojs/react": "^4.3.0",
     "@repo/ui": "*",
     "astro": "^5.12.9",
