@@ -8,8 +8,7 @@ class AuthService {
   private baseURL: string;
 
   constructor() {
-    this.baseURL =
-      import.meta.env.VITE_API_URL || "https://sophia-api.jyoung2k.workers.dev";
+    this.baseURL = import.meta.env.VITE_API_URL || "https://api.jyoung2k.org";
   }
 
   private async request(endpoint: string, options: RequestInit = {}) {

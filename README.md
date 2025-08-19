@@ -3,14 +3,15 @@
 A modern medical application built with React, TypeScript, and Cloudflare Workers.
 
 ## Live Deployment
+
 - **App**: https://app.jyoung2k.org
-- **API**: https://sophia-api.jyoung2k.workers.dev
+- **API**: https://api.jyoung2k.org
 
 **Status**: Testing production branch update
 
 🏥 **Live Application**: [app.jyoung2k.org](https://app.jyoung2k.org)  
 🌐 **Website**: [www.jyoung2k.org](https://www.jyoung2k.org)  
-🔗 **API**: [sophia-api.jyoung2k.workers.dev](https://sophia-api.jyoung2k.workers.dev)
+🔗 **API**: [api.jyoung2k.org](https://api.jyoung2k.org)
 
 A comprehensive medical application platform built with modern web technologies, featuring AI-powered healthcare agents, patient management systems, and compliance tools. Deployed on Cloudflare's global edge network for optimal performance.
 
@@ -19,10 +20,11 @@ A comprehensive medical application platform built with modern web technologies,
 The Sophia medical application is currently deployed and accessible at:
 
 - **Main Application**: https://app.jyoung2k.org - React-based medical interface with AI agents
-- **Marketing Site**: https://www.jyoung2k.org - Landing and information pages  
-- **API Backend**: https://sophia-api.jyoung2k.workers.dev - tRPC API with database connectivity
+- **Marketing Site**: https://www.jyoung2k.org - Landing and information pages
+- **API Backend**: https://api.jyoung2k.org - tRPC API with database connectivity
 
 ### Features Available
+
 - 🤖 **AI Medical Agents**: Genesis Agent, Care Manager, Quantum Agent, Patient Engagement, Compliance Agent
 - 🏥 **Department Management**: Cardiology, Orthopedics, and more
 - 📊 **Patient Care Plans**: Comprehensive lifecycle management
@@ -180,7 +182,7 @@ cd apps/app
 bun run build
 wrangler pages deploy dist --project-name sophia-app
 
-# API Worker (Cloudflare Workers)  
+# API Worker (Cloudflare Workers)
 cd apps/api
 wrangler deploy
 
@@ -202,9 +204,10 @@ terraform apply
 ### Custom Domain Setup
 
 DNS records are configured via Terraform:
+
 - `app.jyoung2k.org` → React application
-- `www.jyoung2k.org` → Marketing website  
-- `sophia-api.jyoung2k.workers.dev` → API backend
+- `www.jyoung2k.org` → Marketing website
+- `api.jyoung2k.org` → API backend
 
 ### Environment Variables
 
@@ -215,7 +218,7 @@ Configure these in `.env.local` and Cloudflare Workers:
 DATABASE_URL=postgresql://...
 HYPERDRIVE_ID=...
 
-# Authentication  
+# Authentication
 BETTER_AUTH_SECRET=...
 GOOGLE_CLIENT_ID=...
 GOOGLE_CLIENT_SECRET=...

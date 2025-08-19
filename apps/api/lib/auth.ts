@@ -53,8 +53,7 @@ export function createAuth(
 
   return betterAuth({
     secret: env.BETTER_AUTH_SECRET,
-    baseURL:
-      process.env.BETTER_AUTH_URL || "https://sophia-api.jyoung2k.workers.dev",
+    baseURL: process.env.BETTER_AUTH_URL || "https://api.jyoung2k.org",
     basePath: "/api/auth",
 
     // Explicit cookie configuration for cross-site usage
@@ -138,7 +137,7 @@ export function createAuth(
     // Configure redirect after successful authentication
     redirects: {
       signIn: "https://app.jyoung2k.org/dashboard",
-      signUp: "https://app.jyoung2k.org/dashboard", 
+      signUp: "https://app.jyoung2k.org/dashboard",
       signOut: "https://app.jyoung2k.org/",
       // Ensure OAuth callback redirects to frontend domain
       afterSignIn: "https://app.jyoung2k.org/dashboard",
@@ -154,7 +153,11 @@ export function createAuth(
           console.log("Account:", ctx.account);
           return ctx;
         },
-        after: async (ctx: { user?: unknown; session?: unknown; account?: unknown }) => {
+        after: async (ctx: {
+          user?: unknown;
+          session?: unknown;
+          account?: unknown;
+        }) => {
           console.log("=== AFTER SIGN IN ===");
           console.log("User:", ctx.user);
           console.log("Session:", ctx.session);
@@ -190,7 +193,7 @@ export function createAuth(
     trustedOrigins: [
       "https://app.jyoung2k.org",
       "https://www.jyoung2k.org",
-      "https://sophia-api.jyoung2k.workers.dev",
+      "https://api.jyoung2k.org",
     ],
   });
 }
@@ -235,7 +238,7 @@ function defaultCallbackUrl(): string {
     process.env.AUTH_CALLBACK_URL ||
     process.env.GOOGLE_OAUTH_CALLBACK_URL || // optional alternate
     process.env.API_BASE_URL || // optional app base
-    "https://sophia-api.jyoung2k.workers.dev/api/auth/callback/google"
+    "https://api.jyoung2k.org/api/auth/callback/google"
   );
 }
 
