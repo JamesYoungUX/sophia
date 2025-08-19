@@ -185,7 +185,7 @@ export function LoginForm() {
             className="text-xs text-red-500 text-center mt-4"
             data-testid="login-version"
           >
-            v.002
+            v.003
           </div>
         </div>
       </div>
