@@ -11,6 +11,10 @@ export const auth = createAuthClient({
   onError: (error: unknown) => {
     console.error("Better Auth error:", error);
   },
+  // Add explicit session handling for OAuth callbacks
+  onSessionUpdate: (session: unknown) => {
+    console.log("Session updated:", session);
+  },
 });
 
 export { auth as authClient };

@@ -138,8 +138,11 @@ export function createAuth(
     // Configure redirect after successful authentication
     redirects: {
       signIn: "https://app.jyoung2k.org/dashboard",
-      signUp: "https://app.jyoung2k.org/dashboard",
+      signUp: "https://app.jyoung2k.org/dashboard", 
       signOut: "https://app.jyoung2k.org/",
+      // Ensure OAuth callback redirects to frontend domain
+      afterSignIn: "https://app.jyoung2k.org/dashboard",
+      afterSignUp: "https://app.jyoung2k.org/dashboard",
     },
 
     // Add callbacks for debugging

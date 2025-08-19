@@ -36,10 +36,20 @@ export function useAuth() {
       // Use Better Auth's signIn.social method which handles the OAuth flow properly
       const result = await auth.signIn.social({
         provider: "google",
-        callbackURL: "/dashboard",
+        callbackURL: "https://app.jyoung2k.org/dashboard",
       });
       
       console.log("OAuth result:", result);
+      
+      // After OAuth, refetch session to ensure frontend has latest state
+      await refetch();
+      
+      // Navigate to dashboard if successful
+      if (result.data) {
+        navigate({ to: "/dashboard" });
+        return { success: true, data: result.data };
+      }
+      
       return { success: true };
     } catch (error) {
       console.error("OAuth error:", error);
