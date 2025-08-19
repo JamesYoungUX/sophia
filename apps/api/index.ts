@@ -103,19 +103,16 @@ app.on(["GET", "POST"], "/api/auth/*", async (c) => {
   }
 
   console.log(`\n=== AUTH REQUEST ===`);
-  console.log(`Path: ${c.req.path}`);
-  console.log(`Method: ${c.req.method}`);
-  console.log(`URL: ${c.req.url}`);
-
+  console.log(`Auth request: ${c.req.method} ${c.req.path}`);
+  console.log('Request headers:', Object.fromEntries(c.req.raw.headers.entries()));
+  
   const result = await auth.handler(c.req.raw);
   
-  console.log(`Auth handler result:`, {
-    status: result.status,
-    statusText: result.statusText,
-    headers: Object.fromEntries(result.headers.entries()),
-  });
-
-  // Fix cross-domain cookie issue by manually setting domain
+  console.log(`Auth response: ${result.status}`);
+  console.log('Response headers:', Object.fromEntries(result.headers.entries()));
+  console.log('Set-Cookie header exists:', !!result.headers.get('set-cookie'));
+  console.log('Raw Set-Cookie:', result.headers.get('set-cookie'));
+  
   if (c.req.path.includes('/callback/') && result.headers.get('set-cookie')) {
     const response = new Response(result.body, {
       status: result.status,
@@ -138,6 +135,35 @@ app.on(["GET", "POST"], "/api/auth/*", async (c) => {
   }
 
   return result;
+});
+
+// Test endpoint to debug session creation
+app.get("/api/test-session", async (c) => {
+  const auth = c.get("auth");
+  if (!auth) {
+    return c.json({ error: "Auth service not available" }, 503);
+  }
+  
+  console.log("=== TEST SESSION CREATION ===");
+  
+  // Try to create a test session manually
+  try {
+    console.log("Test cookie created");
+    return new Response(JSON.stringify({ 
+      message: "Test session endpoint", 
+      cookieSet: true,
+      domain: ".jyoung2k.org"
+    }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Set-Cookie": "test-session=test-value; Domain=.jyoung2k.org; Path=/; HttpOnly; Secure; SameSite=None"
+      }
+    });
+  } catch (error) {
+    console.error("Error creating test session:", error);
+    return c.json({ error: "Failed to create test session" }, 500);
+  }
 });
 
 // tRPC API routes
