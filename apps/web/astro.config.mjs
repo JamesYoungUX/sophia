@@ -3,6 +3,7 @@
 
 import react from "@astrojs/react";
 import cloudflare from "@astrojs/cloudflare";
+import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 
@@ -13,7 +14,14 @@ loadEnv(process.env.NODE_ENV || "production", "../../", "");
 export default defineConfig({
   site: "https://app.jyoung2k.org",
   output: "static",
-  integrations: [react()],
+  integrations: [
+    react({
+      include: ['**/components/*.tsx', '**/components/*.jsx', '**/lib/*.tsx', '**/lib/*.jsx'],
+    }),
+    tailwind({
+      applyBaseStyles: false,
+    }),
+  ],
   vite: {
     ssr: {
       // Ensure externalized deps don't break SSR
@@ -22,15 +30,12 @@ export default defineConfig({
     build: {
       // Generate source maps for better debugging
       sourcemap: true,
-      // Bundle size optimizations
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            react: ["react", "react-dom"],
-            vendor: ["@repo/ui"],
-          },
-        },
-      },
+    },
+    optimizeDeps: {
+      exclude: ['@repo/ui'],
+    },
+    resolve: {
+      preserveSymlinks: true,
     },
   },
 });

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@repo/ui';
+import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from '@repo/ui';
+import RouterWrapper from '@/components/RouterWrapper';
 
 const title = "Features - React Starter Kit";
 const description = "Explore all the powerful features that make React Starter Kit the perfect foundation for your next project.";
@@ -164,12 +165,14 @@ const featureCategories = [
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           {category.features.map((feature) => (
-            <Card client:visible>
-              <CardHeader>
-                <CardTitle className="text-lg">{feature.title}</CardTitle>
-                <CardDescription>{feature.description}</CardDescription>
-              </CardHeader>
-            </Card>
+            <RouterWrapper>
+              <Card client:visible>
+                <CardHeader>
+                  <CardTitle className="text-lg">{feature.title}</CardTitle>
+                  <CardDescription>{feature.description}</CardDescription>
+                </CardHeader>
+              </Card>
+            </RouterWrapper>
           ))}
         </div>
       </section>
