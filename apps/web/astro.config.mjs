@@ -13,6 +13,7 @@ loadEnv(process.env.NODE_ENV || "production", "../../", "");
 export default defineConfig({
   site: "https://app.jyoung2k.org",
   output: "static",
+  srcDir: ".",
   integrations: [react()],
   vite: {
     ssr: {
